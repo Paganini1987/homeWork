@@ -1,0 +1,827 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"arr",
+				"arrDiff"
+			],
+			[
+				"sp",
+				"species"
+			],
+			[
+				"cl",
+				"cleanHouse"
+			],
+			[
+				"w",
+				"wag"
+			],
+			[
+				"proto",
+				"prototype"
+			],
+			[
+				"ta",
+				"ta:r	text-align:right"
+			],
+			[
+				"scroll",
+				"scrollTop"
+			],
+			[
+				"sc",
+				"scrollTop"
+			],
+			[
+				"gue",
+				"guessInput"
+			],
+			[
+				"p",
+				"processGuess"
+			],
+			[
+				"d",
+				"displayMessage"
+			],
+			[
+				"get",
+				"getStr"
+			],
+			[
+				"title",
+				"titlePage"
+			],
+			[
+				"l",
+				"list	list-style-type"
+			],
+			[
+				"i",
+				"index.html"
+			],
+			[
+				"c",
+				"c	color"
+			],
+			[
+				"ru",
+				"runNumberCount"
+			],
+			[
+				"run",
+				"runNamberCount"
+			],
+			[
+				"mw",
+				"maw	max-width"
+			],
+			[
+				"lis",
+				"list	list-style-type"
+			],
+			[
+				"si",
+				"siteHeaderHeight"
+			],
+			[
+				"win",
+				"winHeight"
+			],
+			[
+				"b",
+				"bgp	background-position"
+			],
+			[
+				"fl",
+				"fl:r	float:right"
+			],
+			[
+				"ls",
+				"lts	letter-spacing"
+			],
+			[
+				"h",
+				"css-hamburgers/"
+			],
+			[
+				"min-",
+				"min-height"
+			],
+			[
+				"shi",
+				"shipsSunk"
+			],
+			[
+				"on",
+				"onResize"
+			],
+			[
+				"li",
+				"list	list-style-type"
+			],
+			[
+				"th",
+				"thsh"
+			],
+			[
+				"ge",
+				"getElementById"
+			],
+			[
+				"t",
+				"ta	text-align"
+			],
+			[
+				"border-",
+				"border-color"
+			],
+			[
+				"bs",
+				"border-spacing"
+			],
+			[
+				"d-",
+				"d-f	display: flex;"
+			],
+			[
+				"m",
+				"m-a	margin: auto;"
+			],
+			[
+				"min",
+				"min-width"
+			],
+			[
+				"ws",
+				"whs	white-space"
+			],
+			[
+				"j",
+				"jQuery.mmenu"
+			],
+			[
+				"make",
+				"makeCar"
+			],
+			[
+				"g",
+				"getMostCostEffectiveSolution"
+			],
+			[
+				"high",
+				"highScore"
+			],
+			[
+				"f-",
+				"fl-r	float: right;"
+			],
+			[
+				"bo",
+				"border-bottom"
+			],
+			[
+				"co",
+				"content"
+			],
+			[
+				"padding-",
+				"padding-left"
+			],
+			[
+				"ma",
+				"m-a	margin: auto;"
+			],
+			[
+				"box",
+				"box-shadow"
+			],
+			[
+				"cur",
+				"cursor"
+			],
+			[
+				"bor",
+				"border-radius"
+			],
+			[
+				"wor",
+				"word-wrap"
+			],
+			[
+				"wra",
+				"word-wrap"
+			],
+			[
+				"display",
+				"displayPreloader"
+			],
+			[
+				"tra",
+				"translateY()"
+			],
+			[
+				"trans",
+				"transform"
+			],
+			[
+				"ba",
+				"background-color"
+			],
+			[
+				"d-i",
+				"d-ib	display: inline-block;"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"backg",
+				"background-image"
+			],
+			[
+				"tran",
+				"translateX()"
+			],
+			[
+				"te",
+				"text-decoration"
+			],
+			[
+				"fon",
+				"font-weight"
+			],
+			[
+				"width",
+				"max-width"
+			],
+			[
+				"background-",
+				"background-image"
+			],
+			[
+				"tr",
+				"translateY()"
+			],
+			[
+				"posi",
+				"position"
+			],
+			[
+				"mar",
+				"margin-bottom"
+			],
+			[
+				"blo",
+				"inline-block"
+			],
+			[
+				"bac",
+				"background-color"
+			],
+			[
+				"a",
+				"action	Attr"
+			],
+			[
+				"scr",
+				"script	Tag"
+			],
+			[
+				"re",
+				"require"
+			],
+			[
+				"brow",
+				"browserSync"
+			],
+			[
+				"bro",
+				"browserSync"
+			],
+			[
+				"br",
+				"browserSync"
+			],
+			[
+				"s",
+				"script	Tag"
+			],
+			[
+				"fle",
+				"flex-start"
+			],
+			[
+				"flex",
+				"flex-wrap"
+			],
+			[
+				"margin",
+				"margin-right"
+			],
+			[
+				"spa",
+				"space-around"
+			],
+			[
+				"max-",
+				"max-width"
+			],
+			[
+				"wrap",
+				"flex-wrap"
+			],
+			[
+				"ali",
+				"align-self"
+			],
+			[
+				"b-b",
+				"border-bottom"
+			],
+			[
+				"background",
+				"background-color"
+			],
+			[
+				"pos",
+				"pos-r	position: relative;"
+			],
+			[
+				"padding",
+				"padding-top"
+			],
+			[
+				"f",
+				"flex-start"
+			],
+			[
+				"max",
+				"max-width"
+			],
+			[
+				"bord",
+				"border"
+			],
+			[
+				"inli",
+				"inline-block"
+			],
+			[
+				"paddi",
+				"padding"
+			],
+			[
+				"po",
+				"pos-r	position: relative;"
+			],
+			[
+				"border",
+				"border-radius"
+			],
+			[
+				"padd",
+				"padding"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"ov",
+				"overflow"
+			],
+			[
+				"rg",
+				"rgba()"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"font-s",
+				"font-size"
+			],
+			[
+				"di",
+				"display"
+			],
+			[
+				"z-n",
+				"z-index"
+			],
+			[
+				"box-s",
+				"box-shadow"
+			],
+			[
+				"in",
+				"inset"
+			],
+			[
+				"Ba",
+				"background-color"
+			],
+			[
+				"align-",
+				"align-items"
+			],
+			[
+				"flex-",
+				"flex-grow"
+			],
+			[
+				"list",
+				"list-style"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 354.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"insta",
+				"Indentation: Convert to Spaces"
+			],
+			[
+				"install Pa",
+				"Package Control: Install Package"
+			],
+			[
+				"a",
+				"Autoprefix CSS"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 446.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/G/JS_LoftSchool/homeWork/loftschool-example"
+	],
+	"file_history":
+	[
+		"/G/JS_LoftSchool/lessons/webPack/package.json",
+		"/G/WF/js/Выразительный JS/index.html",
+		"/G/JS_LoftSchool/homeWork/dz1/.DS_Store",
+		"/G/WF/js/Выразительный JS/ajax.html",
+		"/G/WF/LS_Ex1/app/index.html",
+		"/C/Users/Павел/Desktop/Eth/Eth.txt",
+		"/G/JS_LoftSchool/lessons/webPack/source/pages/index/index.pug",
+		"/G/JS_LoftSchool/lessons/webPack/source/pages/index/index.js",
+		"/G/JS_LoftSchool/lessons/webPack/webpack.config.js",
+		"/G/JS_LoftSchool/lessons/webPack/source/pages/blog/blog.pug",
+		"/G/JS_LoftSchool/lessons/webPack/yarn.lock",
+		"/G/JS_LoftSchool/lessons/webPack/build/index.html",
+		"/G/JS_LoftSchool/lessons/webPack/build/index.js",
+		"/G/JS_LoftSchool/lessons/webPack/source/pages/blog/blog.js",
+		"/G/JS_LoftSchool/lessons/webPack/source/components/menu/menu.js",
+		"/G/JS_LoftSchool/lessons/webPack/source/menu.js",
+		"/G/JS_LoftSchool/lessons/webPack/build/main.js",
+		"/G/JS_LoftSchool/lessons/webPack/source/pages/base.pug",
+		"/G/JS_LoftSchool/lessons/webPack/source/index.js",
+		"/G/JS_LoftSchool/lessons/webPack/source/index.pug",
+		"/G/WF/js/По книге/13 глава/palindrome.html",
+		"/G/WF/LS_Ex1/app/js/common.js",
+		"/G/WF/LS_Ex1/app/css/style.css",
+		"/C/Users/Павел/Desktop/Fylh.txt",
+		"/G/WF/js/По книге/13 глава/game.html",
+		"/G/WF/js/По книге/13 глава/dog.html",
+		"/G/WF/js/По книге/13 глава/robot.html",
+		"/I/OpenServer/domains/typhoon43.modx/assets/app/sass/main.sass",
+		"/I/OpenServer/domains/typhoon43.modx/assets/app/js/common.js",
+		"/G/WF/vue.js/app/index.html",
+		"/I/OpenServer/domains/typhoon43.modx/gulpfile.js",
+		"/G/WF/portfolio/package.json",
+		"/G/WF/portfolio/readme.md",
+		"/G/WF/vue.js/app/js/common.js",
+		"/G/WF/vue.js/app/sass/main.sass",
+		"/I/OpenServer/domains/typhoon43.modx/assets/app/sass/_libs.sass",
+		"/I/OpenServer/domains/typhoon43.modx/.bowerrc",
+		"/I/OpenServer/domains/typhoon43.modx/assets/app/sass/_media.sass",
+		"/G/WF/vue.js/package.json",
+		"/G/WF/vue.js/.bowerrc",
+		"/C/Users/Павел/AppData/Local/Temp/_tcx/0/0/kabelniytrap.ru/public_html/wp-config.php",
+		"/C/Users/Павел/AppData/Local/Opera Mail/Opera Mail/temporary_downloads/Тайфун43.txt",
+		"/G/Для сайта/!Интересные шаблоны/WdM/ready-html/app/js/common.js",
+		"/C/Users/Павел/YandexDisk/Тайфун/Тайфун43.txt",
+		"/G/WF/WdM/gulpfile.js",
+		"/G/Для сайта/Тайфун/config.core.php",
+		"/C/Users/Павел/AppData/Local/Temp/_tcx/0/0/public_html/core/config/config.inc.php",
+		"/C/Users/Павел/AppData/Local/Temp/_tcx/0/0/public_html/connectors/config.core.php",
+		"/C/Users/Павел/AppData/Local/Temp/_tcx/0/0/public_html/manager/config.core.php",
+		"/I/config.core.php",
+		"/C/Users/Павел/AppData/Local/Temp/_tcx/0/0/public_html/config.core.php",
+		"/C/Users/Павел/AppData/Local/Temp/_tcx/0/0/public_html/.htaccess",
+		"/C/Users/Павел/AppData/Local/Temp/_tcx/0/0/core/config/config.inc.php",
+		"/C/Users/Павел/AppData/Local/Temp/_tcx/0/0/core/ht.access",
+		"/I/OpenServer/domains/typhoon43.modx/.htaccess",
+		"/I/OpenServer/domains/typhoon43.modx/assets/app/index.html",
+		"/I/OpenServer/domains/typhoon43.modx/assets/app/stoimost.html",
+		"/I/OpenServer/domains/typhoon43.modx/assets/app/services/pultovaya_ohrana.html",
+		"/G/WF/Typhoon43/app/js/common.js",
+		"/G/WF/Typhoon43/app/sass/_media.sass",
+		"/G/WF/Typhoon43/app/sass/_vars.sass",
+		"/G/WF/Typhoon43/gulpfile.js",
+		"/G/WF/Typhoon43/app/sass/main.sass",
+		"/I/OpenServer/domains/typhoon43.modx/manager/templates/default/css/index.css",
+		"/I/5332_19192781_MVM_0.tmp",
+		"/G/WF/Typhoon43/app/uslugi.html",
+		"/G/WF/Typhoon43/app/stoimost.html",
+		"/G/WF/Typhoon43/app/index.html",
+		"/G/WF/Typhoon43/app/services/pultovaya_ohrana.html",
+		"/G/WF/js/По книге/8 глава/index.html",
+		"/G/WF/js/По книге/8 глава/buttleship.js",
+		"/G/WF/js/По книге/8 глава/style.css",
+		"/G/WF/Typhoon43/app/pultovaya_ohrana.html",
+		"/G/WF/Typhoon43/app/sass/_fonts.sass",
+		"/G/WF/WdM/app/index.html",
+		"/G/WF/WdM/app/js/common.js",
+		"/G/WF/Typhoon43/app/Robots.txt",
+		"/G/WF/Typhoon43/app/libs/fotorama/fotorama.css",
+		"/G/WF/Typhoon43/dist/js/scripts.min.js",
+		"/G/WF/Typhoon43/dist/123.txt",
+		"/G/WF/js/Прелоадер/index.html",
+		"/G/WF/Typhoon43/app/sass/_libs.sass",
+		"/C/Users/Павел/AppData/Local/Temp/_tc/css/bootstrap.css",
+		"/G/WF/Typhoon43/app/libs/bootstrap-grid/bootstrap-grid.css",
+		"/C/Users/Павел/AppData/Local/Temp/_tc/jquery-animateNumber-master/demo/index.html",
+		"/G/WF/WdM/app/sass/main.sass",
+		"/G/WF/WdM/app/sass/_libs.sass",
+		"/G/WF/Typhoon43/bower.json",
+		"/G/WF/Typhoon43/app/libs/fotorama/fotorama.js",
+		"/G/WF/WdM/app/sass/_media.sass",
+		"/G/WF/Typhoon43/package.json",
+		"/G/WF/Typhoon43/app/libs/font-awesome/css/font-awesome.min.css",
+		"/G/WF/Typhoon43/app/libs/font-awesome/css/font-awesome.css",
+		"/G/WF/WdM/app/sass/_vars.sass",
+		"/G/WF/WdM/app/sass/_fonts.sass",
+		"/G/WF/Typhoon43/app/fonts/firasanscondensed.css",
+		"/G/WF/work-1/README.md",
+		"/G/WF/Typhoon43/README.md",
+		"/G/WF/Typhoon43/readme.md",
+		"/G/WF/Typhoon43/app/ht.access",
+		"/G/Для сайта/!START_HTML/optimizedhtml-start-template-master/package.json",
+		"/G/Для сайта/!START_HTML/optimizedhtml-start-template-master/gulpfile.js",
+		"/G/Для сайта/!Интересные шаблоны/WdM/ready-html/app/sass/_media.sass",
+		"/C/Users/Павел/YandexDisk/тел.txt",
+		"/C/Users/Павел/Desktop/Тайфун43.txt",
+		"/G/Для сайта/!Интересные шаблоны/WdM/ready-html/app/mail.php",
+		"/G/Для сайта/!Интересные шаблоны/WdM/ready-html/app/index.html",
+		"/G/WF/WdM/bower.json",
+		"/G/WF/WdM/package.json",
+		"/G/WF/WdM/.bowerrc",
+		"/G/Для сайта/Тайфун/Media/Shield.svg",
+		"/G/Для сайта/Тайфун/firasanscondensed_regular_macroman/specimen_files/grid_12-825-55-15.css",
+		"/C/Users/Павел/AppData/Local/Temp/_tc/How_to_use_webfonts.html",
+		"/G/WF/WdM/app/libs/font-awesome/css/font-awesome.min.css",
+		"/I/OpenServer/domains/login/css/style.css",
+		"/G/WF/work-3/app/index.html",
+		"/G/WF/work-2/app/index.html",
+		"/G/WF/work-3/app/css/style.css",
+		"/G/WF/work-3/app/SCSS/style.scss",
+		"/G/WF/js/По книге/7 глава/index2.html",
+		"/G/WF/js/По книге/7 глава/index.html",
+		"/G/WF/js/По книге/6 глава/index.html",
+		"/G/WF/WdM/.gitignore",
+		"/G/WF/WdM/readme.md",
+		"/G/WF/js/По книге/5 глава/index2.html",
+		"/G/WF/js/По книге/5 глава/index.html",
+		"/G/WF/js/По книге/4 глава/index.html",
+		"/G/WF/js/По книге/4 глава"
+	],
+	"find":
+	{
+		"height": 31.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"tel",
+			"sing",
+			"seconds",
+			"hidden",
+			"text",
+			"phone",
+			"mana",
+			"part",
+			"active",
+			"int",
+			"text",
+			"sectio",
+			"sec",
+			"flex-center",
+			"featu",
+			"png",
+			"form.callback",
+			"active",
+			"767",
+			"768",
+			"767",
+			"768",
+			"h3",
+			"fotorama.png",
+			"fotorama",
+			"fotorama.png",
+			"awesome",
+			"hover",
+			"white",
+			"Firasanscondensedsemibold",
+			"Firasanscondensedlight",
+			"Firasanscondensedbook",
+			"700",
+			"Firasanscondensedbold",
+			"bold",
+			"26",
+			"');",
+			"min",
+			"class",
+			"instagram",
+			"<li><a href=\"#\"><i class=\"fa fa-facebook\"></i></a></li>",
+			"../fonts/fontawesome-webfont",
+			"border-box",
+			"f6f7fa",
+			"<link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">",
+			"float",
+			"stylesheet",
+			"none",
+			"items",
+			".nav",
+			"of\n",
+			"})))\n",
+			".nav1toogle",
+			".navtoogle",
+			".nav",
+			"container",
+			"clearfix",
+			".container",
+			".nav",
+			".icon",
+			".nav",
+			"clearfix",
+			"}",
+			"hover",
+			"'var $from'",
+			"$from",
+			"right",
+			"left"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"../fonts/fontawesome/fontawesome-webfont",
+			".nav1",
+			"clearfix1",
+			".container1",
+			".icon_m",
+			".nav_m"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 31.0
+	},
+	"input":
+	{
+		"height": 62.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": false,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "homeWork.sublime-project",
+	"replace":
+	{
+		"height": 58.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 148.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

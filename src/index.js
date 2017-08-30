@@ -53,12 +53,27 @@ function isSomeTrue(array, fn) {
 /*
  Задача 3:
  Функция принимает заранее неизветсное количество аргументов, первым из которых является функция fn
- Функция должна поочередно запусти fn для каждого переданного аргумента (кроме самой fn)
+ Функция должна поочередно запустить fn для каждого переданного аргумента (кроме самой fn)
  Функция должна вернуть массив аргументов, для которых fn выбросила исключение
  Необходимо выбрасывать исключение в случаях:
  - fn не является функцией (с текстом "fn is not a function")
  */
 function returnBadArguments(fn) {
+    var arrayOfArguments=[];
+    var fn_=arguments[0];
+
+    if (typeof fn_ !== 'function') {
+        throw new Error('fn is not a function');
+    }
+    for (var i=1;i<arguments.length;i++) {
+        try {
+            fn_(arguments[i]);
+        } catch (e) {
+            arrayOfArguments.push(arguments[i]);
+        }
+    }
+
+    return arrayOfArguments;
 }
 
 /*

@@ -90,7 +90,53 @@ function returnBadArguments(fn) {
  - number не является числом (с текстом "number is not a number")
  - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
-function calculator() {
+function calculator(n) {
+    if (isNaN(n) && n) {
+        throw new Error('number is not a number');
+    }
+    var calc={
+            number: n || 0,
+            sum: function() {
+                var sumOfArguments=0;
+
+                for (var i=0;i<arguments.length;i++) {
+                    sumOfArguments+=arguments[i];
+                }
+
+                return this.number+sumOfArguments;
+            },
+            dif: function() {
+                var sumOfArguments=0;
+
+                for (var i=0;i<arguments.length;i++) {
+                    sumOfArguments+=arguments[i];
+                }
+
+                return this.number-sumOfArguments;
+            },
+            div: function() {
+                for (var i=0;i<arguments.length;i++) {
+                    if (arguments[i]===0) {
+                         throw new Error('division by 0');
+                    }
+                }
+        
+                for (var i=0;i<arguments.length;i++) {
+                    this.number=this.number/arguments[i];
+                }
+
+                return this.number;
+            },
+            mul: function() {
+                for (var i=0;i<arguments.length;i++) {
+                    this.number=this.number*arguments[i];
+                }
+
+                return this.number;
+            }
+        };
+
+    return calc;
 }
 
 export {

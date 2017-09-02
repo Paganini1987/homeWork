@@ -17,7 +17,7 @@ function forEach(array, fn) {
 function map(array, fn) {
     var newArr=[];
 
-    for(var i=0;i<array.length;i++) {
+    for (var i=0;i<array.length;i++) {
         newArr.push(fn(array[i], i, array));
     }
 
@@ -29,6 +29,19 @@ function map(array, fn) {
  Напишите аналог встроенного метода reduce для работы с массивами
  */
 function reduce(array, fn, initial) {
+    var result;
+
+    if (!initial) {
+        result=array[0];
+    } else {
+        result=initial;
+    } 
+
+    for (var i=initial ? 0 : 1;i<array.length;i++) {
+        result=fn(result, array[i], i, array);
+    }
+
+    return result;
 }
 
 /*

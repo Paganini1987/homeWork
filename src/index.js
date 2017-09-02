@@ -15,6 +15,13 @@ function forEach(array, fn) {
  Напишите аналог встроенного метода map для работы с массивами
  */
 function map(array, fn) {
+    var newArr=[];
+
+    for(var i=0;i<array.length;i++) {
+        newArr.push(fn(array[i], i, array));
+    }
+
+    return newArr;
 }
 
 /*

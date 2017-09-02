@@ -50,6 +50,7 @@ function reduce(array, fn, initial) {
  Функция должна удалить указанное свойство из указанного объекта
  */
 function deleteProperty(obj, prop) {
+    delete obj[prop];
 }
 
 /*

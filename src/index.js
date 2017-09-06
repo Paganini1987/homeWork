@@ -98,6 +98,11 @@ function findError(where) {
  * должно быть преобразовано в <div></div><p></p>
  */
 function deleteTextNodes(where) {
+    for (var i=0;i<where.childNodes.length;i++) {
+        if (where.childNodes[i].nodeType===3) {
+            where.removeChild(where.childNodes[i]);
+        }
+    }
 }
 
 /**

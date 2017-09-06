@@ -21,6 +21,11 @@ function createDivWithText(text) {
  * @return {Element}
  */
 function createAWithHref(hrefValue) {
+    var a=document.createElement('a');
+
+    a.setAttribute('href', hrefValue);
+
+    return a;
 }
 
 /**

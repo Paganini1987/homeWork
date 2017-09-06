@@ -159,6 +159,46 @@ function deleteTextNodesRecursive(where) {
  * }
  */
 function collectDOMStat(root) {
+    var obj={
+        tags: {},
+        classes: {},
+        texts: 0
+    };
+
+    function fn(root) {
+
+        for (var i=0;i<root.childNodes.length;i++) {
+            if (root.childNodes[i].childNodes.length>0) {
+                fn(root.childNodes[i]);
+            }
+            if (root.childNodes[i].nodeType===3) {
+                obj.texts++;                                                                   //текстовые узлы
+            }  
+            if (root.childNodes[i].nodeType!=3) {
+
+                if (root.childNodes[i].nodeType!=3 && root.childNodes[i].classList) {           //классы
+                    for (var j=0;j<root.childNodes[i].classList.length;j++) {
+                        if (obj.classes[root.childNodes[i].classList[j]]) {
+                            obj.classes[root.childNodes[i].classList[j]]++;
+                        } else {
+                            obj.classes[root.childNodes[i].classList[j]]=1;
+                        }
+                    }
+                }
+
+                if (root.childNodes[i].nodeType!=3) {                                           //тэги
+                    if (obj.tags[root.childNodes[i].tagName]) {
+                        obj.tags[root.childNodes[i].tagName]++;
+                    } else {
+                        obj.tags[root.childNodes[i].tagName]=1;
+                    }
+                }
+
+            } 
+        }
+    }
+    fn(root);
+    return obj;
 }
 
 /**

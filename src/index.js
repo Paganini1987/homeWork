@@ -35,6 +35,9 @@ function createAWithHref(hrefValue) {
  * @param {Element} where - куда вставлять
  */
 function prepend(what, where) {
+    var firstChild=where.childNodes[0];
+
+    where.insertBefore(what, firstChild);
 }
 
 /**

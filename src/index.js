@@ -55,6 +55,15 @@ function prepend(what, where) {
  * т.к. следующим соседом этих элементов является элемент с тегом P
  */
 function findAllPSiblings(where) {
+    var elem=[];
+
+    for(var i=0;i<where.children.length-1;i++) {
+        if(where.children[i].nextElementSibling.tagName==='P'){
+            elem.push(where.children[i]);
+        }
+    }
+
+    return elem;
 }
 
 /**

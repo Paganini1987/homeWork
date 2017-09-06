@@ -103,7 +103,6 @@ function deleteTextNodes(where) {
     do {
         if (where.childNodes[i].nodeType===3) {
             where.removeChild(where.childNodes[i]);
-            i=0;
         } else { 
             i++; 
         }
@@ -129,7 +128,6 @@ function deleteTextNodesRecursive(where) {
             i++;
         } else if (where.childNodes[i].nodeType===3) {
             where.removeChild(where.childNodes[i]);
-            i=0;
         } else if (where.childNodes[i].nodeType!=3) {
             i++;
         } 

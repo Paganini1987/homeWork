@@ -41,7 +41,7 @@ function skipDefault(eventName, target) {
  */
 function emulateClick(target) {
     var event=new Event('click');
-    
+
     target.dispatchEvent(event);
 }
 
@@ -53,6 +53,11 @@ function emulateClick(target) {
  * @param {function} fn - функция, которую нужно вызвать при клике на элемент BUTTON внутри target
  */
 function delegate(target, fn) {
+    target.addEventListener('click', function(e) {
+        if (e.target.tagName==='BUTTON') {
+            fn();
+        }
+    });
 }
 
 /**

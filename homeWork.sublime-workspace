@@ -570,6 +570,7 @@
 	],
 	"file_history":
 	[
+		"/G/WF/js/Прелоадер/index.html",
 		"/G/JS_LoftSchool/homeWork/loftschool-example/src/index.js",
 		"/G/JS_LoftSchool/homeWork/loftschool-example/.gitignore",
 		"/G/WF/test/test.html",
@@ -668,7 +669,6 @@
 		"/G/WF/Typhoon43/app/libs/fotorama/fotorama.css",
 		"/G/WF/Typhoon43/dist/js/scripts.min.js",
 		"/G/WF/Typhoon43/dist/123.txt",
-		"/G/WF/js/Прелоадер/index.html",
 		"/G/WF/Typhoon43/app/sass/_libs.sass",
 		"/C/Users/Павел/AppData/Local/Temp/_tc/css/bootstrap.css",
 		"/G/WF/Typhoon43/app/libs/bootstrap-grid/bootstrap-grid.css",
@@ -834,7 +834,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 3295.0,
+						"translation.y": 5395.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

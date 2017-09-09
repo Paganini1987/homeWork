@@ -231,6 +231,35 @@ function collectDOMStat(root) {
  * }
  */
 function observeChildNodes(where, fn) {
+    var objInsert={
+        type: 'insert',
+        nodes: []
+    };
+    var objRemove={
+        type: 'remove',
+        nodes: []
+    };
+    var config={ attributes: true, childList: true, characterData: true, subtree: true };
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.addedNodes.length) {
+                mutation.addedNodes.forEach(function(item){
+                    objInsert.nodes.push(item);
+                });
+
+                fn(objInsert);
+            } 
+            if (mutation.removedNodes.length) {
+                mutation.removedNodes.forEach(function(item){
+                    objRemove.nodes.push(item);
+                });
+
+                fn(objRemove);
+            }
+        });
+    });
+
+    observer.observe(where, config);
 }
 
 export {

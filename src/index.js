@@ -40,6 +40,9 @@ function skipDefault(eventName, target) {
  * @param {Element} target - элемент, на который нужно добавить обработчик
  */
 function emulateClick(target) {
+    var event=new Event('click');
+    
+    target.dispatchEvent(event);
 }
 
 /**

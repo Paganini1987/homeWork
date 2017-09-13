@@ -4,6 +4,58 @@
 		"selected_items":
 		[
 			[
+				"random",
+				"randomColor"
+			],
+			[
+				"for",
+				"forEach"
+			],
+			[
+				"obse",
+				"observeChildNodes"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"class",
+				"classList"
+			],
+			[
+				"no",
+				"nodeType"
+			],
+			[
+				"de",
+				"deleteTextNodes"
+			],
+			[
+				"child",
+				"childNodes"
+			],
+			[
+				"href",
+				"hrefValue"
+			],
+			[
+				"ca",
+				"calculator"
+			],
+			[
+				"su",
+				"sumOfArguments"
+			],
+			[
+				"ar",
+				"arguments"
+			],
+			[
+				"arra",
+				"arrayOfArguments"
+			],
+			[
 				"arr",
 				"arrDiff"
 			],
@@ -25,7 +77,7 @@
 			],
 			[
 				"ta",
-				"ta:r	text-align:right"
+				"ta:r\ttext-align:right"
 			],
 			[
 				"scroll",
@@ -57,7 +109,7 @@
 			],
 			[
 				"l",
-				"list	list-style-type"
+				"list\tlist-style-type"
 			],
 			[
 				"i",
@@ -65,7 +117,7 @@
 			],
 			[
 				"c",
-				"c	color"
+				"c\tcolor"
 			],
 			[
 				"ru",
@@ -77,11 +129,11 @@
 			],
 			[
 				"mw",
-				"maw	max-width"
+				"maw\tmax-width"
 			],
 			[
 				"lis",
-				"list	list-style-type"
+				"list\tlist-style-type"
 			],
 			[
 				"si",
@@ -93,15 +145,15 @@
 			],
 			[
 				"b",
-				"bgp	background-position"
+				"bgp\tbackground-position"
 			],
 			[
 				"fl",
-				"fl:r	float:right"
+				"fl:r\tfloat:right"
 			],
 			[
 				"ls",
-				"lts	letter-spacing"
+				"lts\tletter-spacing"
 			],
 			[
 				"h",
@@ -121,7 +173,7 @@
 			],
 			[
 				"li",
-				"list	list-style-type"
+				"list\tlist-style-type"
 			],
 			[
 				"th",
@@ -133,7 +185,7 @@
 			],
 			[
 				"t",
-				"ta	text-align"
+				"ta\ttext-align"
 			],
 			[
 				"border-",
@@ -145,11 +197,11 @@
 			],
 			[
 				"d-",
-				"d-f	display: flex;"
+				"d-f\tdisplay: flex;"
 			],
 			[
 				"m",
-				"m-a	margin: auto;"
+				"m-a\tmargin: auto;"
 			],
 			[
 				"min",
@@ -157,7 +209,7 @@
 			],
 			[
 				"ws",
-				"whs	white-space"
+				"whs\twhite-space"
 			],
 			[
 				"j",
@@ -177,7 +229,7 @@
 			],
 			[
 				"f-",
-				"fl-r	float: right;"
+				"fl-r\tfloat: right;"
 			],
 			[
 				"bo",
@@ -193,7 +245,7 @@
 			],
 			[
 				"ma",
-				"m-a	margin: auto;"
+				"m-a\tmargin: auto;"
 			],
 			[
 				"box",
@@ -233,7 +285,7 @@
 			],
 			[
 				"d-i",
-				"d-ib	display: inline-block;"
+				"d-ib\tdisplay: inline-block;"
 			],
 			[
 				"back",
@@ -289,11 +341,11 @@
 			],
 			[
 				"a",
-				"action	Attr"
+				"action\tAttr"
 			],
 			[
 				"scr",
-				"script	Tag"
+				"script\tTag"
 			],
 			[
 				"re",
@@ -313,7 +365,7 @@
 			],
 			[
 				"s",
-				"script	Tag"
+				"script\tTag"
 			],
 			[
 				"fle",
@@ -353,7 +405,7 @@
 			],
 			[
 				"pos",
-				"pos-r	position: relative;"
+				"pos-r\tposition: relative;"
 			],
 			[
 				"padding",
@@ -381,7 +433,7 @@
 			],
 			[
 				"po",
-				"pos-r	position: relative;"
+				"pos-r\tposition: relative;"
 			],
 			[
 				"border",
@@ -447,6 +499,24 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "src/dnd.js",
+			"settings":
+			{
+				"buffer_size": 3015,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/G/WF/test/test.html",
+			"settings":
+			{
+				"buffer_size": 1819,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -455,10 +525,18 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 354.0,
-		"last_filter": "",
+		"height": 180.0,
+		"last_filter": "pack",
 		"selected_items":
 		[
+			[
+				"pack",
+				"Preferences: Browse Packages"
+			],
+			[
+				"packa",
+				"Preferences: Browse Packages"
+			],
 			[
 				"insta",
 				"Indentation: Convert to Spaces"
@@ -476,13 +554,14 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 446.0
+		"width": 414.0
 	},
 	"console":
 	{
 		"height": 126.0,
 		"history":
 		[
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
 			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
 		]
 	},
@@ -497,16 +576,38 @@
 	},
 	"expanded_folders":
 	[
-		"/G/JS_LoftSchool/homeWork/loftschool-example"
+		"/G/JS_LoftSchool/homeWork/loftschool-example",
+		"/G/JS_LoftSchool/homeWork/loftschool-example/src",
+		"/G/JS_LoftSchool/homeWork/loftschool-example/test"
 	],
 	"file_history":
 	[
-		"/G/JS_LoftSchool/lessons/webPack/package.json",
-		"/G/WF/js/Выразительный JS/index.html",
-		"/G/JS_LoftSchool/homeWork/dz1/.DS_Store",
-		"/G/WF/js/Выразительный JS/ajax.html",
-		"/G/WF/LS_Ex1/app/index.html",
 		"/C/Users/Павел/Desktop/Eth/Eth.txt",
+		"/G/JS_LoftSchool/homeWork/loftschool-example/test/index.js",
+		"/G/JS_LoftSchool/homeWork/loftschool-example/src/index.js",
+		"/G/JS_LoftSchool/homeWork/loftschool-example/src/dnd.js",
+		"/G/WF/js/Прелоадер/index.html",
+		"/G/JS_LoftSchool/homeWork/loftschool-example/.gitignore",
+		"/G/WF/test/test.html",
+		"/G/WF/test/index.js",
+		"/G/JS_LoftSchool/homeWork/dz1/test/index.js",
+		"/G/JS_LoftSchool/homeWork/loftschool-example/.eslintrc",
+		"/G/WF/test/dz2/123.txt",
+		"/G/WF/test/README.MD",
+		"/G/WF/test/dz1/index.html",
+		"/C/Users/Павел/AppData/Roaming/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
+		"/C/Users/Павел/AppData/Roaming/Sublime Text 3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/G/WF/js/Выразительный JS/ajax.html",
+		"/G/WF/js/Выразительный JS/index.html",
+		"/G/JS_LoftSchool/homeWork/loftschool-example/helper.js",
+		"/G/JS_LoftSchool/homeWork/loftschool-example/coverage/index.js.html",
+		"/G/JS_LoftSchool/homeWork/loftschool-example/coverage/index.html",
+		"/G/JS_LoftSchool/homeWork/loftschool-example/webpack.config.js",
+		"/G/JS_LoftSchool/homeWork/loftschool-example/package.json",
+		"/G/JS_LoftSchool/homeWork/loftschool-example/dist/index.html",
+		"/G/JS_LoftSchool/lessons/webPack/package.json",
+		"/G/JS_LoftSchool/homeWork/dz1/.DS_Store",
+		"/G/WF/LS_Ex1/app/index.html",
 		"/G/JS_LoftSchool/lessons/webPack/source/pages/index/index.pug",
 		"/G/JS_LoftSchool/lessons/webPack/source/pages/index/index.js",
 		"/G/JS_LoftSchool/lessons/webPack/webpack.config.js",
@@ -581,7 +682,6 @@
 		"/G/WF/Typhoon43/app/libs/fotorama/fotorama.css",
 		"/G/WF/Typhoon43/dist/js/scripts.min.js",
 		"/G/WF/Typhoon43/dist/123.txt",
-		"/G/WF/js/Прелоадер/index.html",
 		"/G/WF/Typhoon43/app/sass/_libs.sass",
 		"/C/Users/Павел/AppData/Local/Temp/_tc/css/bootstrap.css",
 		"/G/WF/Typhoon43/app/libs/bootstrap-grid/bootstrap-grid.css",
@@ -609,30 +709,11 @@
 		"/G/Для сайта/!Интересные шаблоны/WdM/ready-html/app/mail.php",
 		"/G/Для сайта/!Интересные шаблоны/WdM/ready-html/app/index.html",
 		"/G/WF/WdM/bower.json",
-		"/G/WF/WdM/package.json",
-		"/G/WF/WdM/.bowerrc",
-		"/G/Для сайта/Тайфун/Media/Shield.svg",
-		"/G/Для сайта/Тайфун/firasanscondensed_regular_macroman/specimen_files/grid_12-825-55-15.css",
-		"/C/Users/Павел/AppData/Local/Temp/_tc/How_to_use_webfonts.html",
-		"/G/WF/WdM/app/libs/font-awesome/css/font-awesome.min.css",
-		"/I/OpenServer/domains/login/css/style.css",
-		"/G/WF/work-3/app/index.html",
-		"/G/WF/work-2/app/index.html",
-		"/G/WF/work-3/app/css/style.css",
-		"/G/WF/work-3/app/SCSS/style.scss",
-		"/G/WF/js/По книге/7 глава/index2.html",
-		"/G/WF/js/По книге/7 глава/index.html",
-		"/G/WF/js/По книге/6 глава/index.html",
-		"/G/WF/WdM/.gitignore",
-		"/G/WF/WdM/readme.md",
-		"/G/WF/js/По книге/5 глава/index2.html",
-		"/G/WF/js/По книге/5 глава/index.html",
-		"/G/WF/js/По книге/4 глава/index.html",
-		"/G/WF/js/По книге/4 глава"
+		"/G/WF/WdM/package.json"
 	],
 	"find":
 	{
-		"height": 31.0
+		"height": 57.0
 	},
 	"find_in_files":
 	{
@@ -646,6 +727,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"this is",
 			"tel",
 			"sing",
 			"seconds",
@@ -737,8 +819,70 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "src/dnd.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3015,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2024,
+								2024
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/OneDark (SL).tmTheme",
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1260.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/G/WF/test/test.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1819,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1029,
+								1029
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/OneDark (SL).tmTheme",
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4
+						},
+						"translation.x": 0.0,
+						"translation.y": 1092.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -777,7 +921,7 @@
 	{
 		"height": 0.0
 	},
-	"pinned_build_system": "",
+	"pinned_build_system": "Packages/Default/Syntax Tests.sublime-build",
 	"project": "homeWork.sublime-project",
 	"replace":
 	{
@@ -819,7 +963,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 148.0,
+	"side_bar_width": 176.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

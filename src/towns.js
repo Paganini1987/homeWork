@@ -36,7 +36,29 @@ let homeworkContainer = document.querySelector('#homework-container');
  * @return {Promise<Array<{name: string}>>}
  */
 function loadTowns() {
+    return new Promise(function(resolve, reject) {
+        var xhr=new XMLHttpRequest();
+
+        xhr.open('GET', 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json');
+        xhr.responseType='json';
+        xhr.addEventListener('load', function() {
+            if (xhr.status<400) {
+                var arr = xhr.response;
+
+                arr.sort(function(a, b) {
+                    if (a.name>b.name) { return 1; }
+                    if (a.name<b.name) { return -1; }
+                });
+
+                resolve(arr);
+            } else {
+                reject(new Error('Не удалось загрузить города'));
+            }
+        });
+        xhr.send();
+    });
 }
+
 
 /**
  * Функция должна проверять встречается ли подстрока chunk в строке full
@@ -52,15 +74,53 @@ function loadTowns() {
  * @return {boolean}
  */
 function isMatching(full, chunk) {
+    if (chunk && full) {
+        return full.toUpperCase().includes(chunk.toUpperCase());
+    }
 }
 
 let loadingBlock = homeworkContainer.querySelector('#loading-block');
 let filterBlock = homeworkContainer.querySelector('#filter-block');
 let filterInput = homeworkContainer.querySelector('#filter-input');
 let filterResult = homeworkContainer.querySelector('#filter-result');
-let townsPromise;
+let townsPromise=loadTowns();
+let cityArr=[];
 
-filterInput.addEventListener('keyup', function() {
+townsPromise.then(success, err);
+
+function success (arr) {
+    loadingBlock.style.display='none';
+    filterBlock.style.display='block';
+    cityArr=arr;
+}
+
+function err (e) {
+    var button=document.createElement('button');
+
+    button.innerText='Повторить';
+    button.style.margin='25px 0px';
+    
+    button.addEventListener('click', function() {
+        homeworkContainer.removeChild(button);
+        loadingBlock.innerText='Загрузка...';
+        loadTowns().then(success, err);
+    });
+
+    loadingBlock.innerText=e.message;
+    homeworkContainer.appendChild(button);   
+}
+
+filterInput.addEventListener('keyup', function(e) {
+    var input=e.target.value;
+    var list='';
+
+    cityArr.forEach(function(item) {
+        if (isMatching(item.name, input)) {
+            list+=('<div>'+item.name+'</div>');
+        }
+    });
+
+    filterResult.innerHTML=list;
 });
 
 export {

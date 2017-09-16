@@ -15,8 +15,8 @@ loaders.push({
 
 module.exports = {
     entry: {
-        main: './src/index.js',
-        townss: './src/towns.js'
+        //main: './src/index.js',
+        towns: './src/towns.js'
     },
     output: {
         filename: '[hash].js',

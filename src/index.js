@@ -39,6 +39,10 @@ function createCookie(name, value) {
  * @param name - имя
  */
 function deleteCookie(name) {
+    var date=new Date();
+    
+    date.setFullYear(1999);
+    document.cookie=name+'=; expires='+date;
 }
 
 export {

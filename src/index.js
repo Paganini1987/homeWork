@@ -9,6 +9,9 @@
  * @return {Window}
  */
 function createWindow(name, width, height) {
+    var params='width='+width+',height='+height;
+
+    return open('about:blank', name, params);
 }
 
 /**

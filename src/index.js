@@ -1,80 +1,44 @@
-/* ДЗ 1 - Функции */
+/* ДЗ 7.1 - BOM */
 
-/*
- Задание 1:
-
- Функция должна принимать один аргумент и возвращать его
+/**
+ * Функция должна создавать окно с указанным именем и размерами
+ *
+ * @param {number} name - имя окна
+ * @param {number} width - ширина окна
+ * @param {number} height - высота окна
+ * @return {Window}
  */
-function returnFirstArgument(arg) {
-	return arg;
+function createWindow(name, width, height) {
 }
 
-/*
- Задание 2:
-
- Функция должна принимать два аргумента и возвращать сумму переданных значений
- Значение по умолчанию второго аргумента должно быть 100
+/**
+ * Функция должна закрывать указанное окно
+ *
+ * @param {Window} window - окно, размер которого надо изменить
  */
-function defaultParameterValue(a, b) {
-	return a + (b || 100);
+function closeWindow(window) {
 }
 
-/*
- Задание 3:
-
- Функция должна возвращать все переданные в нее аргументы в виде массива
- Количество переданных аргументов заранее неизвестно
+/**
+ * Функция должна создавать cookie с указанными именем и значением
+ *
+ * @param name - имя
+ * @param value - значение
  */
-function returnArgumentsArray() {
-	var arr = [];
-	for(var i = 0;i<arguments.length;i++){
-		arr.push(arguments[i]);
-	}
-	return arr;
+function createCookie(name, value) {
 }
 
-/*
- Задание 4:
-
- Функция должна принимать другую функцию и возвращать результат вызова переданной функции
+/**
+ * Функция должна удалять cookie с указанным именем
+ *
+ * @param name - имя
  */
-function returnFnResult(fn) {
-	return fn();
-}
-
-/*
- Задание 5:
-
- Функция должна принимать число (значение по умолчанию - 0) и возвращать функцию (F)
- При вызове F, переданное число должно быть увеличено на единицу и возвращено из F
- */
-function returnCounter(number) {
-	var n = number || 0;
-	return function(){
-		return ++n;
-	}
-}
-
-/*
- Задание 6 *:
-
- Функция должна принимать другую функцию (F) и некоторое количество дополнительных аргументов
- Функция должна привязать переданные аргументы к функции F и вернуть получившуюся функцию
- */
-function bindFunction(fn) {
-  var func=arguments[0];
-  var arg=''; 				
-  for(var i=1;i<arguments.length;i++){
-    arg+=arguments[i];
-  }
-  return func.bind('null',arg);
+function deleteCookie(name) {
 }
 
 export {
-    returnFirstArgument,
-    defaultParameterValue,
-    returnArgumentsArray,
-    returnFnResult,
-    returnCounter,
-    bindFunction
-}
+    createWindow,
+    closeWindow,
+    createCookie,
+    deleteCookie
+};

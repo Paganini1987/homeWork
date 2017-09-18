@@ -85,7 +85,7 @@ addButton.addEventListener('click', () => {
    
 });
 
-addAllCookie();
+addAllCookie(); // Добавляем все куки в таблицу
 
 function deleteCookie(e) {
     var string=e.target.parentNode.parentNode,
@@ -145,7 +145,5 @@ function addAllCookie() {
 
         addCookie(arr[0], arr[1]);
     })
-
-    console.log(cookie);
 }
 

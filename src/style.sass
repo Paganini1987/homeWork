@@ -1,29 +1,93 @@
 body
-	background-color: #fff
-	color: #333
+	width: 100%
+	height: 100vh
+	font-family: 'Fira Sans', sans-serif
 
-#results
-	.wrap
-		padding: 5px
-		transition: 300ms ease
-		border-radius: 50px 0 0 50px
-		&:nth-of-type(2n)
-			background-color: #f5f5f5
+.header, .footer
+	display: block
+	position: relative
+	padding: 0 15px
+	text-align: left
+	background-color: #ff8663
+	font-size: 16px
+	line-height: 40px
+	color: #fff
+	font-weight: 500
+	border-radius: 10px 10px 0 0
+
+.footer
+	background-color: #f0f0f0
+	height: 40px
+	border-radius: 0 0 10px 10px
+
+.find
+	display: block
+	background-color: #f0f0f0
+	padding: 10px
+	input
+		box-shadow: none
+		height: 25px
+		width: 100%
+		border-radius: 12px
+
+.clearfix:after 
+	content: ""
+	display: table
+	clear: both
+
+.header_list
+	display: block
+	line-height: 32px
+	font-size: 12px
+	font-weight: 500
+	border-bottom: 1px solid #f0f0f0
+	padding-left: 15px
+
+.list
+	display: block
+	height: 370px
+	overflow-y: auto
+	padding-left: 15px
+
+.main
+	display: flex
+	height: 100vh
+	.flex_center
+		margin: auto
+		width: 100%
+		.left_column, .right_column
+			display: block
+			float: left
+			width: 50%
+		.left_column
+			box-shadow: 1px 0 0 0 #f0f0f0
+
+.wrap
+	display: flex
+	position: relative
+	align-items: center
+	width: 100%
+	height: 60px
+	font-size: 12px
+	font-weight: 500
+	border-bottom: 1px solid #f0f0f0
+	img
+		width: 45px
+		height: 45px
+		border-radius: 50%
+		margin-left: 7px
+	.fio
+		margin-left: 7px
+	i
+		display: block
+		position: absolute
+		right: 12px
+		top: 50%
+		color: #c4c4c4
+		margin-top: -10px
+		font-size: 20px
+		line-height: 20px
 		&:hover
 			cursor: pointer
-			background-color: #999
-		div, img
-			display: inline-block
-			vertical-align: middle
-			font-size: 20px
-		div
-			padding-left: 10px
-		img
-			border-radius: 50%
+			color: #ff8663
 
-#results
-	display: block
-	width: 500px
-	height: 500px
-	overflow-y: scroll
-	overflow-x: hidden 

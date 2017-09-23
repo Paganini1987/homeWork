@@ -1,0 +1,29 @@
+body
+	background-color: #fff
+	color: #333
+
+#results
+	.wrap
+		padding: 5px
+		transition: 300ms ease
+		border-radius: 50px 0 0 50px
+		&:nth-of-type(2n)
+			background-color: #f5f5f5
+		&:hover
+			cursor: pointer
+			background-color: #999
+		div, img
+			display: inline-block
+			vertical-align: middle
+			font-size: 20px
+		div
+			padding-left: 10px
+		img
+			border-radius: 50%
+
+#results
+	display: block
+	width: 500px
+	height: 500px
+	overflow-y: scroll
+	overflow-x: hidden 

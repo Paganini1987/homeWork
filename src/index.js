@@ -1,80 +1,50 @@
-/* ДЗ 1 - Функции */
+import './style.sass';
+var templateElement = require('./list.hbs');
 
-/*
- Задание 1:
-
- Функция должна принимать один аргумент и возвращать его
- */
-function returnFirstArgument(arg) {
-	return arg;
+function api(method, params) {
+    return new Promise(function(resolve, reject) {
+        VK.api(method, params, function(data) {
+            if (data.error) {
+                reject(new Error(data.error));
+            } else {
+                resolve(data.response);
+            }
+        });
+    });
 }
 
-/*
- Задание 2:
+var promise=new Promise(function(resolve, reject) {
+    VK.init({
+        apiId: 6193803
+    });
 
- Функция должна принимать два аргумента и возвращать сумму переданных значений
- Значение по умолчанию второго аргумента должно быть 100
- */
-function defaultParameterValue(a, b) {
-	return a + (b || 100);
-}
+    VK.Auth.login(function(data) {
+        if (data.session) {
+            resolve(data);
+        } else {
+            reject(new Error('Не удалось авторизоваться!'));
+        }
+    });
+}, 16);
 
-/*
- Задание 3:
+promise
+    .then(function() {
+        return api('users.get', { name_case: 'gen', fields: 'photo_50', v: 5.68 });
+    })
+    .then(function(data) {
+        var [name]=data;
 
- Функция должна возвращать все переданные в нее аргументы в виде массива
- Количество переданных аргументов заранее неизвестно
- */
-function returnArgumentsArray() {
-	var arr = [];
-	for(var i = 0;i<arguments.length;i++){
-		arr.push(arguments[i]);
-	}
-	return arr;
-}
+        header.innerText='Друзья на странице '+name.first_name+' '+name.last_name;
 
-/*
- Задание 4:
+        return api('friends.get', { count: 10, v: 5.68, fields: 'first_name, last_name, photo_100, city' });
+    })
+    .then(function(data) {
+        console.log(templateElement);
 
- Функция должна принимать другую функцию и возвращать результат вызова переданной функции
- */
-function returnFnResult(fn) {
-	return fn();
-}
+        var template = templateElement({ list: data.items });
 
-/*
- Задание 5:
-
- Функция должна принимать число (значение по умолчанию - 0) и возвращать функцию (F)
- При вызове F, переданное число должно быть увеличено на единицу и возвращено из F
- */
-function returnCounter(number) {
-	var n = number || 0;
-	return function(){
-		return ++n;
-	}
-}
-
-/*
- Задание 6 *:
-
- Функция должна принимать другую функцию (F) и некоторое количество дополнительных аргументов
- Функция должна привязать переданные аргументы к функции F и вернуть получившуюся функцию
- */
-function bindFunction(fn) {
-  var func=arguments[0];
-  var arg=''; 				
-  for(var i=1;i<arguments.length;i++){
-    arg+=arguments[i];
-  }
-  return func.bind('null',arg);
-}
-
-export {
-    returnFirstArgument,
-    defaultParameterValue,
-    returnArgumentsArray,
-    returnFnResult,
-    returnCounter,
-    bindFunction
-}
+        results.innerHTML = template;
+    })
+    .catch(function(e) {
+        alert(e.message);
+    });

@@ -74,6 +74,7 @@ function moveItem(...arg) {
 
 function addListeners() {
     leftColumn.addEventListener('click', function(e) {
+        console.log(e);
         if (e.target.id==='event_button') {
             removeItem(e.target.parentNode, leftColumn);
             addItem(e.target.parentNode, rightColumn);
@@ -81,6 +82,7 @@ function addListeners() {
     });
 
     rightColumn.addEventListener('click', function(e) {
+        console.log(e);
         if (e.target.id==='event_button') {
             removeItem(e.target.parentNode, rightColumn);
             addItem(e.target.parentNode, leftColumn);
@@ -89,10 +91,13 @@ function addListeners() {
 
     document.addEventListener('mousedown', function(e) {
         if (!e.target.classList.contains('wrap_item')) {
+            console.log(e, 'test');
             return null;
         }
         var item=e.target;
         var move=moveItem.bind(null, item);
+
+        console.log(e);
 
         item.style.width=item.clientWidth+'px';
         item.style.height=item.clientHeight+'px';
@@ -106,8 +111,28 @@ function addListeners() {
 
         document.addEventListener('mousemove', move);
 
-        document.addEventListener('mouseup', function() {
+        item.addEventListener('mouseup', function mouseUp(e) { //имя функции для того, чтобы потом удалить обработчик
             document.removeEventListener('mousemove', move);
+
+            item.removeEventListener('mouseup', mouseUp);
+
+            item.style.display='none';
+            var elem=document.elementFromPoint(e.clientX, e.clientY);
+            item.style.display='flex';
+
+            if (elem.closest('.droppable')) {
+                elem.closest('.droppable').appendChild(item);
+                item.style.position='';
+                item.style.top='';
+                item.style.left='';
+                item.style.width='';
+
+                if (elem.closest('.droppable').id==='list2') {
+                    addXButton(item);
+                } else {
+                    addPlusButton(item);
+                }
+            }
         });
     });
 }

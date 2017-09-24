@@ -5,7 +5,6 @@ var templateElement = require('./list.hbs'),
     rightColumnArr=[],
     leftColumn=document.querySelector('#list'),
     rightColumn=document.querySelector('#list2');
-    
 
 function api(method, params) {
     return new Promise(function(resolve, reject) {
@@ -72,7 +71,42 @@ function moveItem(...arg) {
     listItem.style.top = e.pageY - listItem.offsetHeight / 2 + 'px';
 }
 
+function isMatching(full, chunk) {
+    if (chunk && full) {
+        return full.toUpperCase().includes(chunk.toUpperCase());
+    } else if (chunk==='') {
+        return true;
+    }
+}
+
+function filter(list, input) {
+    for (var i=0; i<list.length;i++) {
+        if (isMatching(list[i].children[1].innerText, input)) {
+            list[i].style.display='flex';
+        } else {
+            list[i].style.display='none';
+        }
+    }
+}
+
 function addListeners() {
+    document.addEventListener('keyup', function(e) {
+        if (e.target.tagName!=='INPUT') {
+            return null;
+        }
+
+        var inputText=e.target.value;
+        
+        console.log(e);
+        if (e.target.closest('.left_column')) {
+            filter(leftColumn.children, inputText);
+        }
+
+        if (e.target.closest('.right_column')) {
+            filter(rightColumn.children, inputText);
+        }
+
+    });
     leftColumn.addEventListener('click', function(e) {
         console.log(e);
         if (e.target.id==='event_button') {
@@ -91,7 +125,6 @@ function addListeners() {
 
     document.addEventListener('mousedown', function(e) {
         if (!e.target.classList.contains('wrap_item')) {
-            console.log(e, 'test');
             return null;
         }
         var item=e.target;
@@ -113,11 +146,11 @@ function addListeners() {
 
         item.addEventListener('mouseup', function mouseUp(e) { //имя функции для того, чтобы потом удалить обработчик
             document.removeEventListener('mousemove', move);
-
             item.removeEventListener('mouseup', mouseUp);
 
             item.style.display='none';
             var elem=document.elementFromPoint(e.clientX, e.clientY);
+
             item.style.display='flex';
 
             if (elem.closest('.droppable')) {

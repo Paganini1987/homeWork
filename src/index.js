@@ -141,8 +141,8 @@ function addListeners() {
             return null;
         }
         var item=e.target;
-        var x=e.pageX-e.target.offsetLeft; //Позиция клика в элементе
-        var y=e.pageY-e.target.offsetTop;
+        var x=e.offsetX; //Позиция клика в элементе
+        var y=e.offsetY;
 
         var move=moveItem.bind(null, item, x, y);
         
@@ -152,7 +152,6 @@ function addListeners() {
         item.style.position='absolute';
        
         move(e);
-
         document.body.appendChild(item);
 
         item.style.zIndex=1000;
@@ -191,7 +190,7 @@ function addListeners() {
 
 promise
     .then(function() {
-        return api('friends.get', { count: 10, v: 5.68, fields: 'first_name, last_name, photo_100, city' });
+        return api('friends.get', { count: 10, v: 5.68, fields: 'first_name, last_name, photo_100' });
     })
     .then(function(data) {
         var leftArr=[];
@@ -215,8 +214,8 @@ promise
         }
         console.log(leftArr);
         
-        var left = templateElement({ list: leftArr });
-        var right = templateElement({ list: rightArr });
+        var left = templateElement({ list: leftArr, icon: 'fa-plus' });
+        var right = templateElement({ list: rightArr, icon: 'fa-times' });
 
         leftColumn.innerHTML = left;
         rightColumn.innerHTML = right;

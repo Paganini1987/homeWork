@@ -1,10 +1,10 @@
 import './style.sass';
 var templateElement = require('./list.hbs'),
-    results=document.querySelector('#list'),
-    leftColumnArr=[],
-    rightColumnArr=[],
+    columnArr=[],
+    savedColumnArr=[],
     leftColumn=document.querySelector('#list'),
-    rightColumn=document.querySelector('#list2');
+    rightColumn=document.querySelector('#list2'),
+    save=document.querySelector('#save');
 
 function api(method, params) {
     return new Promise(function(resolve, reject) {
@@ -64,11 +64,11 @@ function addPlusButton(item) {
 }
 
 function moveItem(...arg) {
-    var e=arg[1];
+    var e=arg[3];
     var listItem=arg[0];
 
-    listItem.style.left = e.pageX - listItem.offsetWidth / 2 + 'px';
-    listItem.style.top = e.pageY - listItem.offsetHeight / 2 + 'px';
+    listItem.style.left = e.pageX - arg[1] + 'px';
+    listItem.style.top = e.pageY - arg[2] + 'px';
 }
 
 function isMatching(full, chunk) {
@@ -89,6 +89,16 @@ function filter(list, input) {
     }
 }
 
+function changeColumn(item, column) {
+    var id=item.children[3].innerText;
+
+    columnArr.forEach(function(item) {
+        if (item.id==id) {
+            item.column=column;
+        }
+    });
+}
+
 function addListeners() {
     document.addEventListener('keyup', function(e) {
         if (e.target.tagName!=='INPUT') {
@@ -107,19 +117,22 @@ function addListeners() {
         }
 
     });
+    save.addEventListener('click', function() {
+        localStorage.arr=JSON.stringify(columnArr);
+    });
     leftColumn.addEventListener('click', function(e) {
-        console.log(e);
         if (e.target.id==='event_button') {
             removeItem(e.target.parentNode, leftColumn);
             addItem(e.target.parentNode, rightColumn);
+            changeColumn(e.target.parentNode, 'right');
         }
     });
 
     rightColumn.addEventListener('click', function(e) {
-        console.log(e);
         if (e.target.id==='event_button') {
             removeItem(e.target.parentNode, rightColumn);
             addItem(e.target.parentNode, leftColumn);
+            changeColumn(e.target.parentNode, 'left');
         }
     });
 
@@ -128,9 +141,11 @@ function addListeners() {
             return null;
         }
         var item=e.target;
-        var move=moveItem.bind(null, item);
+        var x=e.pageX-e.target.offsetLeft; //Позиция клика в элементе
+        var y=e.pageY-e.target.offsetTop;
 
-        console.log(e);
+        var move=moveItem.bind(null, item, x, y);
+        
 
         item.style.width=item.clientWidth+'px';
         item.style.height=item.clientHeight+'px';
@@ -162,8 +177,12 @@ function addListeners() {
 
                 if (elem.closest('.droppable').id==='list2') {
                     addXButton(item);
+                    
+                    changeColumn(item, 'right');
                 } else {
                     addPlusButton(item);
+
+                    changeColumn(item, 'left');
                 }
             }
         });
@@ -175,9 +194,32 @@ promise
         return api('friends.get', { count: 10, v: 5.68, fields: 'first_name, last_name, photo_100, city' });
     })
     .then(function(data) {
-        var template = templateElement({ list: data.items });
+        var leftArr=[];
+        var rightArr=[];
 
-        results.innerHTML = template;
+        columnArr=data.items.map(function(item) {
+            item.column='left';
+
+            return  item;
+        });
+        savedColumnArr=JSON.parse(localStorage.arr);
+
+        if (savedColumnArr) {
+            savedColumnArr.forEach(function(item) {
+                if (item.column==='right') {
+                    rightArr.push(item);
+                } else {
+                    leftArr.push(item);
+                }
+            });
+        }
+        console.log(leftArr);
+        
+        var left = templateElement({ list: leftArr });
+        var right = templateElement({ list: rightArr });
+
+        leftColumn.innerHTML = left;
+        rightColumn.innerHTML = right;
     })
     .then(function() {
         addListeners();

@@ -71,6 +71,12 @@ function moveItem(...arg) {
     listItem.style.left = e.pageX - arg[1] + 'px';
     listItem.style.top = e.pageY - arg[2] + 'px';
 
+    if (onDroppable(leftColumn, e.pageX, e.pageY) || onDroppable(rightColumn, e.pageX, e.pageY)) {  //Если объект находится над областью
+        listItem.style.boxShadow='3px 2px 3px 0px #d9d9d9';
+        listItem.style.opacity='1';
+    } else {
+        listItem.style.opacity='0.3';
+    }
 }
 
 function isMatching(full, chunk) {
@@ -99,6 +105,14 @@ function changeColumn(item, column) {
             item.column=column;
         }
     });
+}
+
+function onDroppable(obj, x, y) {
+    var a = obj.getBoundingClientRect();
+
+    if ((x > a.left && x < a.left+obj.clientWidth) && (y > a.top && y < a.top+obj.clientHeight)) {
+        return true;
+    }
 }
 
 function addListeners() {
@@ -148,9 +162,6 @@ function addListeners() {
         var y=e.offsetY;
         var move=moveItem.bind(null, item, x, y);
         var source=item.parentNode;
-        // if (!move(e)) {
-        //     return null;
-        // }
 
         item.style.width=item.clientWidth+'px';
         item.style.height=item.clientHeight+'px';
@@ -173,6 +184,8 @@ function addListeners() {
 
             if (elem.closest('.droppable')) {
                 elem.closest('.droppable').appendChild(item);
+                item.style.boxShadow='none';
+                item.style.opacity='1';
                 item.style.position='';
                 item.style.top='';
                 item.style.left='';
@@ -193,6 +206,8 @@ function addListeners() {
                 item.style.top='';
                 item.style.left='';
                 item.style.width='';
+                item.style.boxShadow='none';
+                item.style.opacity='1';
             }
         });
     });

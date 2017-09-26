@@ -1,7 +1,6 @@
 import './style.sass';
 var templateElement = require('./list.hbs'),
     columnArr=[],
-    savedColumnArr=[],
     leftColumn=document.querySelector('#list'),
     rightColumn=document.querySelector('#list2'),
     save=document.querySelector('#save');
@@ -67,8 +66,11 @@ function moveItem(...arg) {
     var e=arg[3];
     var listItem=arg[0];
 
+    e.preventDefault();
+
     listItem.style.left = e.pageX - arg[1] + 'px';
     listItem.style.top = e.pageY - arg[2] + 'px';
+
 }
 
 function isMatching(full, chunk) {
@@ -119,6 +121,7 @@ function addListeners() {
     });
     save.addEventListener('click', function() {
         localStorage.arr=JSON.stringify(columnArr);
+        alert('Данные сохранены!');
     });
     leftColumn.addEventListener('click', function(e) {
         if (e.target.id==='event_button') {
@@ -143,14 +146,15 @@ function addListeners() {
         var item=e.target;
         var x=e.offsetX; //Позиция клика в элементе
         var y=e.offsetY;
-
         var move=moveItem.bind(null, item, x, y);
-        
+        var source=item.parentNode;
+        // if (!move(e)) {
+        //     return null;
+        // }
 
         item.style.width=item.clientWidth+'px';
         item.style.height=item.clientHeight+'px';
         item.style.position='absolute';
-       
         move(e);
         document.body.appendChild(item);
 
@@ -183,6 +187,12 @@ function addListeners() {
 
                     changeColumn(item, 'left');
                 }
+            } else {
+                source.appendChild(item); //Если перенесли не в колонку, то возвращаем элемент назад, откуда был взят
+                item.style.position='';
+                item.style.top='';
+                item.style.left='';
+                item.style.width='';
             }
         });
     });
@@ -196,23 +206,19 @@ promise
         var leftArr=[];
         var rightArr=[];
 
-        columnArr=data.items.map(function(item) {
-            item.column='left';
-
-            return  item;
-        });
-        savedColumnArr=JSON.parse(localStorage.arr);
-
-        if (savedColumnArr) {
-            savedColumnArr.forEach(function(item) {
-                if (item.column==='right') {
-                    rightArr.push(item);
-                } else {
-                    leftArr.push(item);
-                }
-            });
+        if (localStorage.arr) {
+            columnArr=JSON.parse(localStorage.arr);
+        } else {
+            columnArr=data.items;
         }
-        console.log(leftArr);
+
+        columnArr.forEach(function(item) {
+            if (item.column==='right') {
+                rightArr.push(item);
+            } else {
+                leftArr.push(item);
+            }
+        });
         
         var left = templateElement({ list: leftArr, icon: 'fa-plus' });
         var right = templateElement({ list: rightArr, icon: 'fa-times' });

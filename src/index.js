@@ -3,7 +3,12 @@ var templateElement = require('./list.hbs'),
     columnArr=[],
     leftColumn=document.querySelector('#list'),
     rightColumn=document.querySelector('#list2'),
-    save=document.querySelector('#save');
+    save=document.querySelector('#save'),
+    objMove={
+        xStart: 0,
+        yStart: 0,
+        dragStart: false
+    };
 
 function api(method, params) {
     return new Promise(function(resolve, reject) {
@@ -65,8 +70,22 @@ function addPlusButton(item) {
 function moveItem(...arg) {
     var e=arg[3];
     var listItem=arg[0];
-
+    var moveX = e.pageX - objMove.xStart;
+    var moveY = e.pageY - objMove.yStart;
     e.preventDefault();
+
+    if (!objMove.dragStart) {
+        if (Math.abs(moveX) < 3 && Math.abs(moveY) < 3 ) {   //Защита от ложных переносов
+            return null;
+        }
+        listItem.style.width=listItem.clientWidth+'px';
+        listItem.style.height=listItem.clientHeight+'px';
+        listItem.style.position='absolute';
+        document.body.appendChild(listItem);
+        listItem.style.zIndex=1000;
+
+        objMove.dragStart=true;
+    }
 
     listItem.style.left = e.pageX - arg[1] + 'px';
     listItem.style.top = e.pageY - arg[2] + 'px';
@@ -123,7 +142,6 @@ function addListeners() {
 
         var inputText=e.target.value;
         
-        console.log(e);
         if (e.target.closest('.left_column')) {
             filter(leftColumn.children, inputText);
         }
@@ -163,19 +181,23 @@ function addListeners() {
         var move=moveItem.bind(null, item, x, y);
         var source=item.parentNode;
 
-        item.style.width=item.clientWidth+'px';
-        item.style.height=item.clientHeight+'px';
-        item.style.position='absolute';
+        objMove.xStart=e.pageX;  //Запоминаем начальные координаты курсора
+        objMove.yStart=e.pageY;
+
         move(e);
-        document.body.appendChild(item);
-
-        item.style.zIndex=1000;
-
+       
         document.addEventListener('mousemove', move);
 
         item.addEventListener('mouseup', function mouseUp(e) { //имя функции для того, чтобы потом удалить обработчик
             document.removeEventListener('mousemove', move);
             item.removeEventListener('mouseup', mouseUp);
+            
+            if (!objMove.dragStart) {
+                objMove.dragStart = false;
+                return null;
+            }
+
+            objMove.dragStart = false;
 
             item.style.display='none';
             var elem=document.elementFromPoint(e.clientX, e.clientY);
@@ -215,7 +237,7 @@ function addListeners() {
 
 promise
     .then(function() {
-        return api('friends.get', { count: 10, v: 5.68, fields: 'first_name, last_name, photo_100' });
+        return api('friends.get', { v: 5.68, fields: 'first_name, last_name, photo_100' });
     })
     .then(function(data) {
         var leftArr=[];

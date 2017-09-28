@@ -4,6 +4,8 @@ var templateElement = require('./list.hbs'),
     leftColumn=document.querySelector('#list'),
     rightColumn=document.querySelector('#list2'),
     save=document.querySelector('#save'),
+    inputLeft=document.querySelector('#inputLeft'),
+    inputRight=document.querySelector('#inputRight'),
     objMove={
         xStart: 0,
         yStart: 0,
@@ -35,6 +37,13 @@ var promise=new Promise(function(resolve, reject) {
         }
     });
 }, 16);
+
+function clearInputs() {
+    inputRight.value='';
+    inputLeft.value='';
+    filter(leftColumn.children, '');
+    filter(rightColumn.children, '');
+}
 
 function addItem(item, where) {
     where.appendChild(item);
@@ -85,6 +94,7 @@ function moveItem(...arg) {
         listItem.style.zIndex=1000;
 
         objMove.dragStart=true;
+        clearInputs();
     }
 
     listItem.style.left = e.pageX - arg[1] + 'px';
@@ -139,7 +149,6 @@ function addListeners() {
         if (e.target.tagName!=='INPUT') {
             return null;
         }
-
         var inputText=e.target.value;
         
         if (e.target.closest('.left_column')) {
@@ -160,6 +169,7 @@ function addListeners() {
             removeItem(e.target.parentNode, leftColumn);
             addItem(e.target.parentNode, rightColumn);
             changeColumn(e.target.parentNode, 'right');
+            clearInputs();
         }
     });
 
@@ -168,6 +178,7 @@ function addListeners() {
             removeItem(e.target.parentNode, rightColumn);
             addItem(e.target.parentNode, leftColumn);
             changeColumn(e.target.parentNode, 'left');
+            clearInputs();
         }
     });
 
@@ -180,7 +191,16 @@ function addListeners() {
         var y=e.offsetY;
         var move=moveItem.bind(null, item, x, y);
         var source=item.parentNode;
+        var itemReset = function(item) {
+            item.style.boxShadow='none';
+            item.style.opacity='1';
+            item.style.position='';
+            item.style.top='';
+            item.style.left='';
+            item.style.width='';
+        };
 
+        e.stopPropagation();
         objMove.xStart=e.pageX;  //Запоминаем начальные координаты курсора
         objMove.yStart=e.pageY;
 
@@ -206,12 +226,7 @@ function addListeners() {
 
             if (elem.closest('.droppable')) {
                 elem.closest('.droppable').appendChild(item);
-                item.style.boxShadow='none';
-                item.style.opacity='1';
-                item.style.position='';
-                item.style.top='';
-                item.style.left='';
-                item.style.width='';
+                itemReset(item);
 
                 if (elem.closest('.droppable').id==='list2') {
                     addXButton(item);
@@ -224,12 +239,7 @@ function addListeners() {
                 }
             } else {
                 source.appendChild(item); //Если перенесли не в колонку, то возвращаем элемент назад, откуда был взят
-                item.style.position='';
-                item.style.top='';
-                item.style.left='';
-                item.style.width='';
-                item.style.boxShadow='none';
-                item.style.opacity='1';
+                itemReset(item);
             }
         });
     });

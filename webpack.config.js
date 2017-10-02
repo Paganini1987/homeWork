@@ -6,10 +6,10 @@ let loaders = require('./webpack.config.loaders')();
 let path = require('path');
 
 loaders.push({
-    test: /\.css$/,
+    test: /\.sass$/,
     loader: ExtractTextPlugin.extract({
         fallbackLoader: 'style-loader',
-        loader: 'css-loader'
+        loader: ['css-loader', 'sass-loader']
     })
 });
 
@@ -24,15 +24,9 @@ module.exports = {
         loaders
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true,
-            compress: {
-                drop_debugger: false
-            }
-        }),
         new ExtractTextPlugin('styles.css'),
         new HtmlPlugin({
-            title: 'Loft School sample project',
+            title: 'Yandex maps project',
             template: 'index.hbs'
         }),
         new CleanWebpackPlugin(['dist'])

@@ -1,80 +1,97 @@
-/* ДЗ 1 - Функции */
+import './style.sass';
 
-/*
- Задание 1:
+var vk=require('./vk_init.js')();
+var myMap;
+var clusterer;
 
- Функция должна принимать один аргумент и возвращать его
- */
-function returnFirstArgument(arg) {
-	return arg;
+function init() {
+    return new Promise(function(resolve) {
+        ymaps.ready(resolve);
+    });
 }
 
-/*
- Задание 2:
+function geocode(friend) {
+    return ymaps.geocode(friend.adress).then(result => {
+        const points = result.geoObjects.toArray();
 
- Функция должна принимать два аргумента и возвращать сумму переданных значений
- Значение по умолчанию второго аргумента должно быть 100
- */
-function defaultParameterValue(a, b) {
-	return a + (b || 100);
+        if (points.length) {
+            return {
+                fio: friend.fio,
+                photo: friend.photo,
+                adress: points[0].geometry.getCoordinates()
+            };
+        }
+    });
 }
 
-/*
- Задание 3:
-
- Функция должна возвращать все переданные в нее аргументы в виде массива
- Количество переданных аргументов заранее неизвестно
- */
-function returnArgumentsArray() {
-	var arr = [];
-	for(var i = 0;i<arguments.length;i++){
-		arr.push(arguments[i]);
-	}
-	return arr;
+function userCoord() {
+    return new Promise(function(resolve) {
+        navigator.geolocation.getCurrentPosition(function(geo) {resolve(geo)});
+    });
 }
 
-/*
- Задание 4:
 
- Функция должна принимать другую функцию и возвращать результат вызова переданной функции
- */
-function returnFnResult(fn) {
-	return fn();
-}
+init()
+    .then(function() {
+        return vk.init();
+    })
+    .then(function() {
+        return userCoord();  //Определяем координаты пользователя для определения центра карты
+    })
+    .then(function(coords) {
+        var coord=[];
+        coord[0]=coords.coords.latitude,
+        coord[1]=coords.coords.longitude;
+        myMap=new ymaps.Map('map', {
+            center: coord,
+            zoom: 7
+        });
 
-/*
- Задание 5:
+        clusterer = new ymaps.Clusterer({
+            preset: 'islands#invertedVioletClusterIcons',
+            clusterBalloonContentLayout: 'cluster#balloonCarousel',
+            clusterBalloonPanelMaxMapArea: 0,
+            clusterBalloonPagerSize: 15,
+            clusterDisableClickZoom: true,
+            openBalloonOnClick: true
+        });
 
- Функция должна принимать число (значение по умолчанию - 0) и возвращать функцию (F)
- При вызове F, переданное число должно быть увеличено на единицу и возвращено из F
- */
-function returnCounter(number) {
-	var n = number || 0;
-	return function(){
-		return ++n;
-	}
-}
+        myMap.geoObjects.add(clusterer);
+    })
+    .then(function() {
+        return vk.api('friends.get', { count: 150, v: 5.68, fields: 'country, city, first_name, last_name, photo_100' });
+    })
+    .then(function(data) {
+        var friends=data.items
+            .filter(friend => friend.country && friend.country.title)
+            .map(friend => {
+                var adress=friend.country.title+' ';
 
-/*
- Задание 6 *:
+                if (friend.city) {
+                    adress+=friend.city.title;
+                }
 
- Функция должна принимать другую функцию (F) и некоторое количество дополнительных аргументов
- Функция должна привязать переданные аргументы к функции F и вернуть получившуюся функцию
- */
-function bindFunction(fn) {
-  var func=arguments[0];
-  var arg=''; 				
-  for(var i=1;i<arguments.length;i++){
-    arg+=arguments[i];
-  }
-  return func.bind('null',arg);
-}
+                return {
+                    fio: friend.first_name+' '+friend.last_name,
+                    adress: adress,
+                    photo: friend.photo_100
+                };
+            })
+            .map(friend => geocode(friend));           
 
-export {
-    returnFirstArgument,
-    defaultParameterValue,
-    returnArgumentsArray,
-    returnFnResult,
-    returnCounter,
-    bindFunction
-}
+        return Promise.all(friends);
+    })
+    .then(function(coords) {
+        const placemarks = coords.map(friend => {
+            return new ymaps.Placemark(friend.adress, {
+                balloonContentHeader: friend.fio,
+                balloonContentBody: '<img class="ballon_body" src='+friend.photo+'>'
+            }, { preset: 'islands#blueHomeCircleIcon' })
+        });
+
+        clusterer.add(placemarks);
+    })
+    // .catch(function(e) {
+    //     console.error(e.message);
+    // });
+

@@ -1,8 +1,45 @@
 import './style.sass';
 
-var vk=require('./vk_init.js')();
 var myMap;
 var clusterer;
+var places=[];
+
+function Place(coords, name, place) {
+    this.adress='';
+    this.coords=coords;
+    this.name=name;
+    this.place=place;
+    this.reviews=[];
+}
+
+Place.prototype.geocoder=function(coords) {
+    return ymaps.geocode(coords).then(result=>{
+        var points=result.geoObjects.toArray();
+
+        if (points.length) {
+            this.adress = points[0].getAddressLine();
+        }
+    });
+};
+
+Place.prototype.addText=function(review) {
+    this.reviews.push(review);
+};
+
+Place.prototype.showForm=function(x, y) {
+    var modal=document.querySelector('#modal');
+    var close=document.querySelector('#close');
+
+    close.addEventListener('click', ()=>{ this.closeForm(modal) });
+
+    modal.style.top=y+'px';
+    modal.style.left=x+'px';
+    modal.style.display='block';
+};
+
+Place.prototype.closeForm=function(obj) {
+    obj.style.display='none';
+};
 
 function init() {
     return new Promise(function(resolve) {
@@ -10,19 +47,6 @@ function init() {
     });
 }
 
-function geocode(friend) {
-    return ymaps.geocode(friend.adress).then(result => {
-        const points = result.geoObjects.toArray();
-
-        if (points.length) {
-            return {
-                fio: friend.fio,
-                photo: friend.photo,
-                adress: points[0].geometry.getCoordinates()
-            };
-        }
-    });
-}
 
 function userCoord() {
     return new Promise(function(resolve) {
@@ -33,18 +57,16 @@ function userCoord() {
 
 init()
     .then(function() {
-        return vk.init();
-    })
-    .then(function() {
         return userCoord();  //Определяем координаты пользователя для определения центра карты
     })
     .then(function(coords) {
         var coord=[];
+
         coord[0]=coords.coords.latitude,
         coord[1]=coords.coords.longitude;
         myMap=new ymaps.Map('map', {
             center: coord,
-            zoom: 7
+            zoom: 12
         });
 
         clusterer = new ymaps.Clusterer({
@@ -59,38 +81,30 @@ init()
         myMap.geoObjects.add(clusterer);
     })
     .then(function() {
-        return vk.api('friends.get', { count: 150, v: 5.68, fields: 'country, city, first_name, last_name, photo_100' });
-    })
-    .then(function(data) {
-        var friends=data.items
-            .filter(friend => friend.country && friend.country.title)
-            .map(friend => {
-                var adress=friend.country.title+' ';
+        myMap.events.add('click', function (e) {
+            var coords = e.get('coords');
+            var [pageX, pageY] = e.get('pagePixels');
+            var place=new Place(coords, 'place1', 'Mac');
+  
+            place.geocoder(coords);
+            place.addText({ text: 'hello' });
+            places.push(place);
 
-                if (friend.city) {
-                    adress+=friend.city.title;
-                }
-
-                return {
-                    fio: friend.first_name+' '+friend.last_name,
-                    adress: adress,
-                    photo: friend.photo_100
-                };
-            })
-            .map(friend => geocode(friend));           
-
-        return Promise.all(friends);
-    })
-    .then(function(coords) {
-        const placemarks = coords.map(friend => {
-            return new ymaps.Placemark(friend.adress, {
-                balloonContentHeader: friend.fio,
-                balloonContentBody: '<img class="ballon_body" src='+friend.photo+'>'
-            }, { preset: 'islands#blueHomeCircleIcon' })
+            place.showForm(pageX, pageY);
+            console.log(pageX, pageY);
         });
+    });
+    
+    // .then(function(coords) {
+    //     const placemarks = coords.map(friend => {
+    //         return new ymaps.Placemark(friend.adress, {
+    //             balloonContentHeader: friend.fio,
+    //             balloonContentBody: '<img class="ballon_body" src='+friend.photo+'>'
+    //         }, { preset: 'islands#blueHomeCircleIcon' })
+    //     });
 
-        clusterer.add(placemarks);
-    })
+    //     clusterer.add(placemarks);
+    // })
     // .catch(function(e) {
     //     console.error(e.message);
     // });

@@ -4,23 +4,21 @@ var myMap;
 var clusterer;
 var places=[];
 
-function Place(coords, name, place) {
-    this.adress='';
+function Place(adress, coords) {
+    this.adress=adress;
     this.coords=coords;
-    this.name=name;
-    this.place=place;
     this.reviews=[];
 }
 
-Place.prototype.geocoder=function(coords) {
-    return ymaps.geocode(coords).then(result=>{
-        var points=result.geoObjects.toArray();
+// Place.prototype.geocoder=function(coords) {
+//     return ymaps.geocode(coords).then(result=>{
+//         var points=result.geoObjects.toArray();
 
-        if (points.length) {
-            this.adress = points[0].getAddressLine();
-        }
-    });
-};
+//         if (points.length) {
+//             this.adress = points[0].getAddressLine();
+//         }
+//     });
+// };
 
 Place.prototype.addText=function(review) {
     this.reviews.push(review);
@@ -29,12 +27,17 @@ Place.prototype.addText=function(review) {
 Place.prototype.showForm=function(x, y) {
     var modal=document.querySelector('#modal');
     var close=document.querySelector('#close');
+    var adress=document.querySelector('#adress');
 
     close.addEventListener('click', ()=>{ this.closeForm(modal) });
 
+    adress.innerText=this.adress;
     modal.style.top=y+'px';
     modal.style.left=x+'px';
     modal.style.display='block';
+
+    var reviews=this.reviews;
+
 };
 
 Place.prototype.closeForm=function(obj) {
@@ -54,6 +57,15 @@ function userCoord() {
     });
 }
 
+function geocoder(coords) {
+    return ymaps.geocode(coords).then(function(result) {
+        var points=result.geoObjects.toArray();
+
+        if (points.length) {
+            return points[0].getAddressLine();
+        }
+    });
+}
 
 init()
     .then(function() {
@@ -84,16 +96,25 @@ init()
         myMap.events.add('click', function (e) {
             var coords = e.get('coords');
             var [pageX, pageY] = e.get('pagePixels');
-            var place=new Place(coords, 'place1', 'Mac');
-  
-            place.geocoder(coords);
-            place.addText({ text: 'hello' });
-            places.push(place);
+            
+            geocoder(coords).then(function(adress) {
+                if (places.some(place=>place.adress===adress)) {
+                    places.forEach(place=>{
+                        if (place.adress===adress) {
+                            place.showForm(pageX, pageY);
+                        }
+                    });
+                } else {
+                    var newPlace=new Place(adress, coords);
 
-            place.showForm(pageX, pageY);
-            console.log(pageX, pageY);
+                    newPlace.showForm(pageX, pageY);
+                    places.push(newPlace);
+                }                   
+            });
+           console.log(places);
         });
     });
+
     
     // .then(function(coords) {
     //     const placemarks = coords.map(friend => {

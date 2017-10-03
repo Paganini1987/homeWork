@@ -1,16 +1,63 @@
 body
 	position: relative
+	font-family: 'Fira Sans'
 
 #map
 	width: 100%
 	height: 100vh
 
 #modal
-	display: none
+	display: block
 	position: absolute
 	top: 100px
 	left: 100px
-	width: 200px
+	width: 380px
 	height: auto
 	background-color: #FFF
+	box-shadow: 20px 20px 20px 0px rgba(0, 0, 0, 0.3)
+	.header
+		display: block
+		position: relative
+		background-color: #ff8663
+		border-radius: 15px 15px 0 0
+		line-height: 42px
+		font-size: 12px
+		color: #fff
+		padding: 0 10px
+		i
+			font-size: 16px
+			margin-right: 10px
+		i#close
+			display: block
+			position: absolute
+			right: 10px
+			top: 50%
+			margin-top: -10px
+			font-size: 20px
+			transition: 300ms ease
+			&:hover
+				transform: rotate(360deg)
+				cursor: pointer
+
+	.reviews
+		display: block
+		height: 160px
+		overflow-Y: auto
+		margin: 10px 0 10px 10px
+	.review
+		padding: 10px
+		.review_header
+			display: block
+			font-size: 16px
+			line-height: 20px
+			color: #ff8663
+			text-transform: uppercase
+			font-weight: 500
+			padding: 10px 0
+		input, textarea
+			display: block
+			width: 100%
+			margin-bottom: 15px
+
+		
 

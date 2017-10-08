@@ -3,21 +3,26 @@ import './style.sass';
 var myMap;
 var clusterer;
 var places=[];
+var newPlace;
+var modal=document.querySelector('#modal');
+var close=document.querySelector('#close');
+var adress=document.querySelector('#adress');
+var reviews=document.querySelector('.reviews');
+var save=document.querySelector('#save');
+var form=document.querySelector('.review');
 
 function Place(adress, coords) {
     this.adress=adress;
     this.coords=coords;
-    this.reviews=[];
+    this.form='';
+    this.points=[];
 }
 
 Place.prototype.showForm=function(x, y) {
-    var modal=document.querySelector('#modal');
-    var close=document.querySelector('#close');
-    var adress=document.querySelector('#adress');
-    var reviews=document.querySelector('.reviews');
-    var save=document.querySelector('#save');
-    var form=document.querySelector('.review');
-    var thisObj=this;                               //Вопрос
+    var thisObj=this; 
+    
+    this.form=modal;
+
     var savef = function(e) {
         e.preventDefault();
    
@@ -33,29 +38,35 @@ Place.prototype.showForm=function(x, y) {
         
         reviews.innerHTML+=`<div><div><b>${name}</b> ${place} ${date.toLocaleString('ru')}</div><div>${review}</div></div>`;
 
-        thisObj.reviews.push({
+        thisObj.points.push({
             name: name,
+            coords: thisObj.coords,
+            adress: thisObj.adress,
             place: place,
             review: review,
             date: date
         });
+        
         resetForm(form);
         addMarker();
     };
     resetForm(form);
 
-    close.addEventListener('click', ()=>{ 
-        this.closeForm(modal) ;
+    close.addEventListener('click', function closef() { 
+        thisObj.closeForm() ;
         save.removeEventListener('click', savef);
+        close.removeEventListener('click', closef);
     });
+
     save.addEventListener('click', savef);
 
     adress.innerText=adressTrimm(this.adress);
-    if (this.reviews.length===0) {
+
+    if (this.points.length===0) {
         reviews.innerHTML='<h4 id="placeholder">Отзывов пока нет...</h4>';
     } else {
         reviews.innerHTML='';
-        this.reviews.forEach((item)=>{
+        this.points.forEach((item)=>{
             reviews.innerHTML+=`<div><div><b>${item.name}</b> ${item.place} ${item.date.toLocaleString('ru')}</div><div>${item.review}</div></div>`;
         });
     }
@@ -68,8 +79,11 @@ Place.prototype.showForm=function(x, y) {
 
 };
 
-Place.prototype.closeForm=function(obj) {
-    obj.style.display='none';
+Place.prototype.closeForm=function() {
+    this.form.style.display='none';
+    if (this.points.length===0) {
+        places.pop(this);
+    }
 };
 
 function init() {
@@ -96,10 +110,19 @@ function geocoder(coords) {
 }
 
 function addMarker() {
-    const placemarks = places.map(place => {
-        return new ymaps.Placemark(place.coords, {
-            balloonContentHeader: place.adress,
-            balloonContentBody: place.reviews.join(', ')
+    var points=[];
+
+    places.forEach((place)=>{
+        place.points.forEach((point)=>{
+            points.push(point);
+        });
+    });
+
+    const placemarks = points.map(point => {
+        return new ymaps.Placemark(point.coords, {
+            balloonContentHeader: point.place,
+            balloonContentBody: '<a data-coords="'+point.coords+'" id="showFormFromBalloon">'+point.adress+'</a><div>'+point.review+'</div>',
+            balloonContentFooter: '<div id="balloonDate">'+point.date.toLocaleString('ru')+'</div>'
         }, { preset: 'islands#blueCircleDotIcon' });
     });
     clusterer.removeAll(); //Очищаем все метки с карты
@@ -121,6 +144,17 @@ function adressTrimm(adress){
         return adress;
     }
 }
+
+document.addEventListener('click', (e)=>{
+    if (e.target.id==='showFormFromBalloon') {
+        places.forEach(place=>{
+            if (place.coords.join(',')===e.target.dataset.coords) {
+                clusterer.balloon.close(this);
+                place.showForm(e.pageX, e.pageY);
+            }
+        });
+    }
+});
 
 init()
     .then(function() {
@@ -148,20 +182,34 @@ init()
         myMap.geoObjects.add(clusterer);
     })
     .then(function() {
+        myMap.geoObjects.events.add('click', function (e) {
+            var object = e.get('target');
+            var coords = object.geometry.getCoordinates();
+
+            if (object instanceof ymaps.Placemark) {
+                e.preventDefault();
+  
+                places.forEach(place=>{
+                    if (place.coords.join('')===coords.join('')) {
+                        place.showForm(e.pageX, e.pageY);
+                    }
+                });
+            }       
+        });
         myMap.events.add('click', function (e) {
+            if (modal.style.display==='block') {
+                var event=new Event('click');
+
+                close.dispatchEvent(event);
+                e.preventDefault();
+                return null;
+            }
             var coords = e.get('coords');
             var [pageX, pageY] = e.get('pagePixels');
 
             geocoder(coords).then(function(adress) {
-                if (places.some(place=>place.coords.join('')===coords.join(''))) {
-                    places.forEach(place=>{
-                        if (place.adress===adress) {
-                            place.showForm(pageX, pageY);
-                        }
-                    });
-                } else {
-                    var newPlace=new Place(adress, coords);
-
+                if (!places.some(place=>place.coords.join('')===coords.join(''))) {
+                    newPlace=new Place(adress, coords);
                     newPlace.showForm(pageX, pageY);
                     places.push(newPlace);
                 }                   

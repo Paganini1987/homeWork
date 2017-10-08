@@ -16,15 +16,16 @@ Place.prototype.showForm=function(x, y) {
     var adress=document.querySelector('#adress');
     var reviews=document.querySelector('.reviews');
     var save=document.querySelector('#save');
+    var form=document.querySelector('.review');
     var thisObj=this;                               //Вопрос
     var savef = function(e) {
         e.preventDefault();
    
         var name=document.querySelector('#name').value;
         var place=document.querySelector('#place').value;
-        var review=document.querySelector('#review').value;
         var date=new Date();
         var placeholder=document.querySelector('#placeholder');
+        var review=document.querySelector('#review').value;
 
         if (placeholder) {
             reviews.removeChild(placeholder);
@@ -38,9 +39,10 @@ Place.prototype.showForm=function(x, y) {
             review: review,
             date: date
         });
-
+        resetForm(form);
         addMarker();
-    }
+    };
+    resetForm(form);
 
     close.addEventListener('click', ()=>{ 
         this.closeForm(modal) ;
@@ -48,7 +50,7 @@ Place.prototype.showForm=function(x, y) {
     });
     save.addEventListener('click', savef);
 
-    adress.innerText=this.adress;
+    adress.innerText=adressTrimm(this.adress);
     if (this.reviews.length===0) {
         reviews.innerHTML='<h4 id="placeholder">Отзывов пока нет...</h4>';
     } else {
@@ -102,6 +104,22 @@ function addMarker() {
     });
     clusterer.removeAll(); //Очищаем все метки с карты
     clusterer.add(placemarks);
+}
+
+function resetForm(form) {
+    for (var i=0; i<form.children.length; i++) {
+        if (form.children[i].tagName==='INPUT' || form.children[i].tagName==='TEXTAREA') {
+            form.children[i].value='';
+        }
+    }
+}
+
+function adressTrimm(adress){
+    if (adress.length>45) {
+        return adress.slice(0, 45)+'. . .';
+    } else {
+        return adress;
+    }
 }
 
 init()

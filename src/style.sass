@@ -19,6 +19,25 @@ body
 	bottom: 10px
 	color: #999
 
+#blur
+	display: none
+	position: absolute
+	top: 0
+	bottom: 0
+	left: 0
+	right: 0
+	z-index: 100
+	span
+		margin: auto
+		font-size: 26px
+	& ~ *
+		transition: opacity 1s ease
+	&.active
+		display: flex
+		& ~ *
+			opacity: 0.3
+			filter: blur(1px)
+
 #modal
 	display: none
 	position: absolute
@@ -81,5 +100,4 @@ body
 			width: 100%
 			margin-bottom: 15px
 
-		
 

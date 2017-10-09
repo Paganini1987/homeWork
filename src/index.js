@@ -11,6 +11,7 @@ var adress=document.querySelector('#adress');
 var reviews=document.querySelector('.reviews');
 var save=document.querySelector('#save');
 var form=document.querySelector('.review');
+var blur=document.querySelector('#blur');
 
 function Place(adress, coords) {
     this.adress=adress;
@@ -27,7 +28,14 @@ Place.prototype.showForm=function(x, y) {
     var savef = function(e) {
 
         e.preventDefault();
-   
+        
+        if (!validate(form)) {
+            blur.classList.add('active');
+            setTimeout(()=>{ blur.classList.remove('active'); }, 1500);
+
+            return null;
+        }
+
         var name=document.querySelector('#name').value;
         var place=document.querySelector('#place').value;
         var date=new Date();
@@ -52,6 +60,7 @@ Place.prototype.showForm=function(x, y) {
         resetForm(form);
         addMarker();
     };
+
     resetForm(form);
 
     close.addEventListener('click', function closef() { 
@@ -73,8 +82,10 @@ Place.prototype.showForm=function(x, y) {
         });
     }
 
-    modal.style.top=y+'px';
-    modal.style.left=x+'px';
+    var coords=isIncluded(x, y); //Отображаем окно в границах экрана
+
+    modal.style.top=coords.y+'px';
+    modal.style.left=coords.x+'px';
     modal.style.display='block';
 
 };
@@ -92,10 +103,9 @@ function init() {
     });
 }
 
-
 function userCoord() {
-    return new Promise(function(resolve) {
-        navigator.geolocation.getCurrentPosition(function(geo) {resolve(geo)});
+    return new Promise(function(resolve, reject) {
+        navigator.geolocation.getCurrentPosition(function(geo) { resolve(geo) }, reject);
     });
 }
 
@@ -133,16 +143,55 @@ function resetForm(form) {
     for (var i=0; i<form.children.length; i++) {
         if (form.children[i].tagName==='INPUT' || form.children[i].tagName==='TEXTAREA') {
             form.children[i].value='';
+            form.children[i].style.border='';
         }
     }
 }
 
-function adressTrimm(adress){
+function adressTrimm(adress) {
     if (adress.length>45) {
         return adress.slice(0, 45)+'. . .';
     } else {
         return adress;
     }
+}
+
+function isIncluded(pageX, pageY) {
+    var screenHeight=document.documentElement.clientHeight;
+    var screenWidth=document.documentElement.clientWidth;
+    var modalHeight=523;
+    var modalWidth=380;
+    var coords={
+        x: pageX,
+        y: pageY
+    };
+
+    if (screenWidth-pageX<modalWidth && pageX>modalWidth) {
+        coords.x=pageX-modalWidth;
+    }
+
+    if (screenHeight-pageY<modalHeight && pageY>modalHeight) {
+        coords.y=pageY-modalHeight;
+    }
+
+    return coords;
+}
+
+function validate(form) {
+    var valid=true;
+
+    for (var i=0; i<form.children.length; i++) {
+        if (form.children[i].tagName==='INPUT' || form.children[i].tagName==='TEXTAREA') {
+            if (form.children[i].value==='') {
+                form.children[i].style.border='1px solid red';
+                valid=false;
+            } else {
+                form.children[i].style.border='';
+            }
+        }
+    }
+
+    return valid;
 }
 
 document.addEventListener('click', (e)=>{
@@ -168,8 +217,14 @@ init()
         myMap=new ymaps.Map('map', {
             center: coord,
             zoom: 12
-        });
-
+        });  
+    }, function() {
+        myMap=new ymaps.Map('map', {
+            center: [55.76, 37.64],
+            zoom: 12
+        });  
+    })
+    .then(function() {
         clusterer = new ymaps.Clusterer({
             preset: 'islands#invertedVioletClusterIcons',
             clusterBalloonContentLayout: 'cluster#balloonCarousel',
@@ -180,8 +235,7 @@ init()
         });
 
         myMap.geoObjects.add(clusterer);
-    })
-    .then(function() {
+
         myMap.geoObjects.events.add('click', function (e) {
             var object = e.get('target');
             var coords = object.geometry.getCoordinates();
@@ -202,6 +256,7 @@ init()
 
                 close.dispatchEvent(event);
                 e.preventDefault();
+
                 return null;
             }
             var coords = e.get('coords');

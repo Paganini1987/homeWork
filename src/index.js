@@ -1,4 +1,5 @@
 import './style.sass';
+var dnd=require('./dnd.js');
 
 var myMap;
 var clusterer;
@@ -19,11 +20,12 @@ function Place(adress, coords) {
 }
 
 Place.prototype.showForm=function(x, y) {
-    var thisObj=this; 
+    var that=this; 
     
     this.form=modal;
 
     var savef = function(e) {
+
         e.preventDefault();
    
         var name=document.querySelector('#name').value;
@@ -38,10 +40,10 @@ Place.prototype.showForm=function(x, y) {
         
         reviews.innerHTML+=`<div><div><b>${name}</b> ${place} ${date.toLocaleString('ru')}</div><div>${review}</div></div>`;
 
-        thisObj.points.push({
+        that.points.push({
             name: name,
-            coords: thisObj.coords,
-            adress: thisObj.adress,
+            coords: that.coords,
+            adress: that.adress,
             place: place,
             review: review,
             date: date
@@ -53,7 +55,7 @@ Place.prototype.showForm=function(x, y) {
     resetForm(form);
 
     close.addEventListener('click', function closef() { 
-        thisObj.closeForm() ;
+        that.closeForm() ;
         save.removeEventListener('click', savef);
         close.removeEventListener('click', closef);
     });
@@ -74,8 +76,6 @@ Place.prototype.showForm=function(x, y) {
     modal.style.top=y+'px';
     modal.style.left=x+'px';
     modal.style.display='block';
-
-    
 
 };
 

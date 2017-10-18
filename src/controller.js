@@ -5,26 +5,60 @@ var messageContainer=document.querySelector('#messageContainer');
 var input=document.querySelector('#input');
 var send=document.querySelector('#sendButton');
 
+function leftOrRight(message, wrap) {
+    if (message.body.name===localStorage.name) {
+        wrap.classList.add('left');
+    } else {
+        wrap.classList.add('right');
+    }   
+}
+
+function render(message, type) {
+    var li=document.createElement('LI');
+    var div=document.createElement('DIV');
+    
+    leftOrRight(message, div);
+
+    if (type==='service') {
+        li.classList.add('bg-info');
+    } else {
+        li.classList.add('bg-primary');
+    }
+    li.innerText=message.body.text+'  '+message.body.name;
+    messageContainer.appendChild(div).appendChild(li);
+}
+
+function addMessage(messages, type) {
+    if (messages instanceof Array) {
+        messages.forEach(message=> {
+            render(message, type);            
+        })
+    } else {
+        render(messages, type);
+    }
+}
+
 socket.addEventListener('message', event=> {
     var message=JSON.parse(event.data);
 
     if (message.type==='service') {
         if (message.hash) {
-            localStorage.hash=message.hash;
+            localStorage.sessionId=message.hash;
         } 
         if (message.body.text) {
-            console.log(message.body.text);
+            addMessage(message, 'service');
+        }
+        if (message.history) {                  //При последующих авторизованных запусках отображаем историю
+            addMessage(message.history);
+            console.log(message.history);
         }
     
         return null;
     }
 
     if (message.type==='message') {
-        var li=document.createElement('LI');
-
-        li.classList.add('bg-info');
-        li.innerText=message.body.text;
-        messageContainer.appendChild(li);
+        console.log(message)
+        addMessage(message)
 
         return null;
     }
@@ -36,15 +70,16 @@ socket.addEventListener('error', function() {
 });
 
 socket.addEventListener('open', ()=> {
-    if (localStorage.hash) {
+    if (localStorage.sessionId) {
         var request={
             type: 'hello',
-            sessionId: localStorage.hash
+            sessionId: localStorage.sessionId
         }
     } else {
         var name=prompt('Enter name');
         var pass=prompt('Enter password');
 
+        localStorage.name=name;
         var request={
             type: 'hello',
             sessionId: '',
@@ -61,8 +96,9 @@ socket.addEventListener('open', ()=> {
 send.addEventListener('click',()=> {
     var request={
         type: 'message',
-        sessionId: localStorage.hash || '',
+        sessionId: localStorage.sessionId || '',
         body: {
+            name: localStorage.name,
             text: input.value
         }
     }

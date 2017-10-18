@@ -24,7 +24,7 @@ session={
     password: 'string',
     name: 'string',
     photo: 'string',
-    messages: []
+    messages: [{},{},...]
 }
 */
 function sendResponse(obj, socket) {
@@ -34,6 +34,7 @@ function sendResponse(obj, socket) {
                     sessionId: obj.sessionId || '',
                     password: obj.password || '',
                     photo: obj.photo || '',
+                    history: obj.history || '',
                     body: {
                         text: obj.text || '',
                         name: obj.name || ''
@@ -57,20 +58,13 @@ function sessionExist(message, socket) {
     sessions.forEach(session=> {
         if (session.name===message.body.name) {
             if (session.password===message.password) {
-                sendResponse({ type: 'service', hash: session.sessionId, text: 'Welcom again '+session.name }, socket);
+                sendResponse({ type: 'service', hash: session.sessionId, history: session.messages }, socket);
                 exist=true;
 
                 return null;
             } else {
-                var response={
-                    type: 'service',
-                    hash: '',
-                    body: {
-                        text: 'Wrong password!'
-                    }
-                }
                 
-                socket.send(JSON.stringify(response));
+                sendResponse({ type: 'service', hash: '', text: 'Wrong password!' }, socket);
                 exist=true;
 
                 return null;
@@ -92,16 +86,10 @@ function newSession(message, socket) {
     session.name=message.body.name;
     session.photo=message.photo;
     session.password=message.password;
+    session.messages=[];
     sessions.push(session);
 
-    var response={
-        type: 'service',
-        hash: hash,
-        body:{
-            text: 'Registration success!'
-        }
-    }
-    socket.send(JSON.stringify(response));
+    sendResponse({ type: 'service', hash: hash, text: 'Registration success!', text: 'Вы зарегистрированы под ником '+ message.body.name}, socket);
 }
 
 function session(message, socket) {
@@ -109,17 +97,8 @@ function session(message, socket) {
     if (message.sessionId) {
  
         sessions.forEach(session=> {
-            console.log(session);
             if (session.sessionId===message.sessionId) {
-
-                var response={
-                    type: 'service',
-                    body: {
-                        text: 'Hello '+session.name
-                    }
-                }
-                
-                socket.send(JSON.stringify(response));
+                sendResponse({ type: 'service', history: session.messages }, socket);
 
                 return null;
             }
@@ -143,7 +122,18 @@ server.on('connection', socket=> {
 
         if (message.type==='message') {
             if (sessions.some(session=> session.sessionId===message.sessionId)) {
-                    connections.forEach(connection=> {
+                //Запиь сообщения во все существующие сессии
+                sessions.forEach(session=> {
+                    session.messages.push({
+                        photo: '',
+                        body: {
+                            name: message.body.name,
+                            text: message.body.text
+                        }
+                    });
+                })
+                //***********************************************
+                connections.forEach(connection=> {
                     sendResponse({ type: 'message', text: message.body.text, name: message.body.name }, connection);
                 })
             } else {

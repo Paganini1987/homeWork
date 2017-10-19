@@ -93,6 +93,7 @@ socket.addEventListener('open', ()=> {
     socket.send(JSON.stringify(request));  
 });
 
+
 send.addEventListener('click',()=> {
     var request={
         type: 'message',

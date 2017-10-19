@@ -20,13 +20,35 @@ message={
 }
 
 session={
-    sessionId: 'number',
+    sessionId: 'string',
     password: 'string',
     name: 'string',
     photo: 'string',
     messages: [{},{},...]
 }
 */
+function closeConnection(sessionId) {
+    sessions.forEach(session=> {
+        if (session.sessionId===sessionId) {
+            connections.forEach(connection=> {
+                sendResponse({ type: 'service', text: 'Пользователь '+session.name+' вышел из сети.' }, connection);
+            })
+        }
+    })
+}
+
+function openConnection(sessionId) {
+    sessions.forEach(session=> {
+        if (session.sessionId===sessionId) {
+            connections.forEach(connection=> {
+                if (connection.sessionId!==sessionId) {
+                    sendResponse({ type: 'service', text: 'Пользователь '+session.name+' в сети.' }, connection);
+                }
+            })
+        }
+    })
+}
+
 function sendResponse(obj, socket) {
     var response={
                     type: obj.type || '',
@@ -47,6 +69,7 @@ function sendResponse(obj, socket) {
                 return current !== socket;
             });
 
+            closeConnection(socket.sessionId);
             console.log('close connection');
         }
     });
@@ -59,6 +82,9 @@ function sessionExist(message, socket) {
         if (session.name===message.body.name) {
             if (session.password===message.password) {
                 sendResponse({ type: 'service', hash: session.sessionId, history: session.messages }, socket);
+
+                openConnection(session.sessionId);
+                socket.sessionId=message.sessionId; //Запоминаем в сокете Id сессии.
                 exist=true;
 
                 return null;
@@ -89,7 +115,11 @@ function newSession(message, socket) {
     session.messages=[];
     sessions.push(session);
 
-    sendResponse({ type: 'service', hash: hash, text: 'Registration success!', text: 'Вы зарегистрированы под ником '+ message.body.name}, socket);
+    socket.sessionId=hash; //Запоминаем в сокете Id сессии.
+
+    sendResponse({ type: 'service', hash: hash, text: 'Вы зарегистрированы под ником '+ message.body.name}, socket);
+
+    openConnection(session.sessionId);
 }
 
 function session(message, socket) {
@@ -100,6 +130,10 @@ function session(message, socket) {
             if (session.sessionId===message.sessionId) {
                 sendResponse({ type: 'service', history: session.messages }, socket);
 
+                socket.sessionId=message.sessionId; //Запоминаем в сокте Id сессии.
+
+                openConnection(session.sessionId);
+                
                 return null;
             }
         })
@@ -149,7 +183,9 @@ server.on('connection', socket=> {
             return current !== socket;
         });
 
-        console.log('close connection');
+        closeConnection(socket.sessionId);
+        console.log('close connection id: '+socket.sessionId);
+
     });
 })
 

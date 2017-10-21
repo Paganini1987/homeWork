@@ -4,7 +4,7 @@ var crypto=require('crypto');
 var server=new WSS({ port: 9090 });
 var connections=[];
 var sessions=[];
-
+var connectionNames=[];
 
 /*
 message={
@@ -31,7 +31,7 @@ function closeConnection(sessionId) {
     sessions.forEach(session=> {
         if (session.sessionId===sessionId) {
             connections.forEach(connection=> {
-                sendResponse({ type: 'service', text: 'Пользователь '+session.name+' вышел из сети.' }, connection);
+                sendResponse({ type: 'service', text: 'Пользователь '+session.name+' вышел из сети.', status: 'offline', name: session.name }, connection);
             })
         }
     })
@@ -42,7 +42,7 @@ function openConnection(sessionId) {
         if (session.sessionId===sessionId) {
             connections.forEach(connection=> {
                 if (connection.sessionId!==sessionId) {
-                    sendResponse({ type: 'service', text: 'Пользователь '+session.name+' в сети.' }, connection);
+                    sendResponse({ type: 'service', text: 'Пользователь '+session.name+' в сети.', name: session.name }, connection);
                 }
             })
         }
@@ -57,6 +57,8 @@ function sendResponse(obj, socket) {
                     password: obj.password || '',
                     photo: obj.photo || '',
                     history: obj.history || '',
+                    sessions: obj.sessions || '',
+                    status: obj.status || 'online',
                     body: {
                         text: obj.text || '',
                         name: obj.name || ''
@@ -85,12 +87,14 @@ function sessionExist(message, socket) {
 
                 openConnection(session.sessionId);
                 socket.sessionId=message.sessionId; //Запоминаем в сокете Id сессии.
+                socket.name=session.name;
+
                 exist=true;
 
                 return null;
             } else {
                 
-                sendResponse({ type: 'service', hash: '', text: 'Wrong password!' }, socket);
+                sendResponse({ type: 'service', hash: '', text: 'Не верный пароль' }, socket);
                 exist=true;
 
                 return null;
@@ -116,8 +120,9 @@ function newSession(message, socket) {
     sessions.push(session);
 
     socket.sessionId=hash; //Запоминаем в сокете Id сессии.
+    socket.name=message.body.name;
 
-    sendResponse({ type: 'service', hash: hash, text: 'Вы зарегистрированы под ником '+ message.body.name}, socket);
+    sendResponse({ type: 'service', hash: hash, text: 'Вы зарегистрированы под ником '+message.body.name, name: message.body.name }, socket);
 
     openConnection(session.sessionId);
 }
@@ -125,18 +130,22 @@ function newSession(message, socket) {
 function session(message, socket) {
 
     if (message.sessionId) {
- 
-        sessions.forEach(session=> {
-            if (session.sessionId===message.sessionId) {
-                sendResponse({ type: 'service', history: session.messages }, socket);
+        if (sessions.some(session=> session.sessionId===message.sessionId)) {
+            sessions.forEach(session=> {
+                if (session.sessionId===message.sessionId) {
+                    sendResponse({ type: 'service', history: session.messages, name: session.name }, socket);
 
-                socket.sessionId=message.sessionId; //Запоминаем в сокте Id сессии.
+                    socket.sessionId=message.sessionId; //Запоминаем в сокте Id сессии.
+                    socket.name=session.name;
 
-                openConnection(session.sessionId);
-                
-                return null;
-            }
-        })
+                    openConnection(session.sessionId);
+                    
+                    return null;
+                }
+            })
+        } else {
+            sendResponse({ type: 'service', text: 'Сессия с таким идентификатором не найдена на сервере' }, socket);
+        }
     } else {
         if (!sessionExist(message, socket)) {
             newSession(message, socket);
@@ -145,6 +154,11 @@ function session(message, socket) {
 }
 
 server.on('connection', socket=> {
+    connectionNames=connections.map(connection=> connection.name);
+    if (connectionNames.length) {
+        sendResponse({ type: 'service', sessions: connectionNames }, socket);
+    }
+    
     connections.push(socket);
 
 	socket.on('message', message=> {
@@ -156,7 +170,7 @@ server.on('connection', socket=> {
 
         if (message.type==='message') {
             if (sessions.some(session=> session.sessionId===message.sessionId)) {
-                //Запиь сообщения во все существующие сессии
+                //Запись сообщения во все существующие сессии
                 sessions.forEach(session=> {
                     session.messages.push({
                         photo: '',
@@ -171,7 +185,7 @@ server.on('connection', socket=> {
                     sendResponse({ type: 'message', text: message.body.text, name: message.body.name }, connection);
                 })
             } else {
-                sendResponse({ type: 'service', text: 'wrong sessionId' }, socket);
+                sendResponse({ type: 'service', text: 'не верный sessionId' }, socket);
             }
             
         }

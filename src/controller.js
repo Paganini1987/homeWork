@@ -1,12 +1,37 @@
 var SHA256 = require("crypto-js/sha256");
-
 var socket=new WebSocket('ws://localhost:9090');
 var messageContainer=document.querySelector('#messageContainer');
 var input=document.querySelector('#input');
 var send=document.querySelector('#sendButton');
+var sessionsContainer=document.querySelector('#sessionsContainer');
+var sessions=[];
 
-function leftOrRight(message, wrap) {
-    if (message.body.name===localStorage.name) {
+function sessionsController(message) {
+    console.log(message);
+    if (!sessions.some(session=> session.name===message.body.name) && message.status==='online') {
+        sessions.push({ name: message.body.name });
+    }
+    if (message.status==='offline') {
+        sessions=sessions.filter(session=> session.name!==message.body.name);
+    }
+    if (message.sessions) {
+        sessions=message.sessions.map(session=> { return { name: session } });
+    }
+
+    sessionsContainer.innerHTML='';
+    sessions.forEach(session=> {
+        var li=document.createElement('LI');
+        var div=document.createElement('DIV');
+
+        li.id=session.name;
+        div.innerText=session.name;
+        li.appendChild(div);
+        sessionsContainer.appendChild(li);
+    })
+}
+
+function leftOrRight(message, wrap, type) {
+    if (message.body.name===localStorage.name && type!=='service') {
         wrap.classList.add('left');
     } else {
         wrap.classList.add('right');
@@ -17,14 +42,19 @@ function render(message, type) {
     var li=document.createElement('LI');
     var div=document.createElement('DIV');
     
-    leftOrRight(message, div);
+    leftOrRight(message, div, type);
 
     if (type==='service') {
         li.classList.add('bg-info');
     } else {
         li.classList.add('bg-primary');
     }
-    li.innerText=message.body.text+'  '+message.body.name;
+    if (type!=='service') {
+        li.innerText=message.body.name+': '+message.body.text;
+    } else {
+        li.innerText=message.body.text;
+    }
+    
     messageContainer.appendChild(div).appendChild(li);
 }
 
@@ -50,8 +80,9 @@ socket.addEventListener('message', event=> {
         }
         if (message.history) {                  //При последующих авторизованных запусках отображаем историю
             addMessage(message.history);
-            console.log(message.history);
         }
+
+        sessionsController(message);
     
         return null;
     }

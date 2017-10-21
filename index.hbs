@@ -16,12 +16,10 @@
 			margin: 0;
 			padding: 0;
 		}
-		li {
+		.view li {
 			display: inline-block;
 			border-radius: 5px;
-			background-color: #9999ff;
 			margin-bottom: 10px;
-			color: black;
 			padding: 5px;
 		}
 		li > div {
@@ -37,12 +35,24 @@
 			display: block;
 			margin-bottom: 20px;
 		}
+		#sessionsContainer li>div {
+			display: block;
+			line-height: 50px;
+			text-align: left;
+			font-size: 20px;
+			border-bottom: 1px solid #333;
+		}
 	</style>
 </head>
 <body>
 	<div class="container">
 		<div class="raw">
-			<div class="col-md-12">
+			<div class="col-md-4 col-sm-4">
+				<div class="sessions">
+					<ul id='sessionsContainer'></ul>
+				</div>
+			</div>
+			<div class="col-md-8 col-sm-8">
 				<div class="view">
 					<ul class="list-group" id="messageContainer">
     			</ul>

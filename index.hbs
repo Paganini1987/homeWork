@@ -4,61 +4,27 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-	<style>
-		.view {
-			display: block;
-			height: 400px;
-			padding: 20px;
-			overflow: auto;
-		}
-		ul {
-			list-style-type: none;
-			margin: 0;
-			padding: 0;
-		}
-		.view li {
-			display: inline-block;
-			border-radius: 5px;
-			margin-bottom: 10px;
-			padding: 5px;
-		}
-		li > div {
-			display: block;
-		}
-		.left {
-			text-align: left;
-		}
-		.right{
-			text-align: right;
-		}
-		#input {
-			display: block;
-			margin-bottom: 20px;
-		}
-		#sessionsContainer li>div {
-			display: block;
-			line-height: 50px;
-			text-align: left;
-			font-size: 20px;
-			border-bottom: 1px solid #333;
-		}
-	</style>
+	<link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500" rel="stylesheet">
 </head>
 <body>
-	<div class="container">
-		<div class="raw">
+	<div class="container-fluid">
+		<div class="row">
 			<div class="col-md-4 col-sm-4">
 				<div class="sessions">
+					<div class="user"></div>
+					<div>Участники (<span id='length'></span>)</div>
 					<ul id='sessionsContainer'></ul>
 				</div>
 			</div>
 			<div class="col-md-8 col-sm-8">
 				<div class="view">
 					<ul class="list-group" id="messageContainer">
-    			</ul>
+    				</ul>
 				</div>
-				<input class="form-control" type="text" id="input">
-				<button class="btn btn-default" id="sendButton">отправить</button>
+				<div class="footer">
+					<input class="form-control inline message-input" type="text" id="input">
+					<button class="btn btn-default inline send" id="sendButton">отправить</button>
+				</div>				
 			</div>
 		</div>
 	</div>

@@ -1,21 +1,23 @@
 module.exports = {
+    userInfo() {
+        var user_info_name=document.querySelector('#user_info_name');
+
+        if (localStorage.name) {
+            user_info_name.innerText=localStorage.name;
+        }
+    },
     sessionsController(message, sessions) { // Добавлет или удаляет пользователей из списка
         var sessionsContainer=document.querySelector('#sessionsContainer');
         var length=document.querySelector('#length');
 
-        if (!sessions.some(session=> session.name===message.body.name) && message.status==='online') {
-            sessions.push({ name: message.body.name });
-        }
-        if (message.status==='offline') {
-            sessions=sessions.filter(session=> session.name!==message.body.name);
-        }
         if (message.sessions) {
             sessions=message.sessions.map(session=> { return { name: session } });
         }
-    
+
+        console.log(sessions);
         sessionsContainer.innerHTML='';
         length.innerText=sessions.length;
-
+        sessions.sort();
         sessions.forEach(session=> {
             var li=document.createElement('LI');
             var div=document.createElement('DIV');
@@ -64,6 +66,15 @@ module.exports = {
         } else {
             wrap.classList.add('right');
         }   
+    },
+    interfceOnOFF(flag) {
+        var main_container=document.querySelector('#main_container');
+
+        if (flag==='on') {
+            main_container.classList.remove('bw');
+        } else {
+            main_container.classList.add('bw');
+        }
     }
     
 }

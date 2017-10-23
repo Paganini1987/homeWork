@@ -2,6 +2,30 @@ $accent: #ff8663
 $textColorDef: #ffffff
 body
     font-family: 'fira sans'
+
+#modal
+    display: none
+    position: absolute
+    min-width: 400px
+    z-index: 100
+    background-color: white
+    border-radius: 5px
+    padding: 10px
+    text-align: right
+    border: 1px solid #ccc
+    top: 0
+    left: 50%
+    margin-left: -200px
+    box-shadow: 0 0 20px 0px rgba(0,0,0,0.3);
+    h3
+        text-align: left
+    input
+        margin-bottom: 10px
+    
+.bw
+    *
+        filter: blur(1px)
+        filter: grayscale(.75)
 .left
     text-align: left
     &>div
@@ -29,15 +53,42 @@ body
     color: $textColorDef
     font-size: 20px
     padding: 15px
+    .user
+        display: block
+
+        img
+            display: inline-block
+            width: 50px
+            height: 50px
+            border-radius: 50%
+            background-color: #fff
+            margin-right: 10px
+            vertical-align: middle
+        .user_name
+            display: inline-block
+            font-size: 16px
+            vertical-align: middle
+    .wrap
+        display: block
+        padding: 10px 0
+        border-top: 1px solid #fff
+        border-bottom: 1px solid #fff
+        margin: 20px 0
+        #logout
+            display: block
+            margin: 0 auto
+
     #sessionsContainer
         list-style: none
         margin: 0
         padding: 0
         margin-left: 15px
         font-size: 16px
+        
         li
             display: block
             padding: 5px
+            font-weight: 300
 .footer
     display: block
     margin-top: -80px

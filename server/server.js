@@ -31,7 +31,8 @@ function closeConnection(sessionId) {
     sessions.forEach(session=> {
         if (session.sessionId===sessionId) {
             connections.forEach(connection=> {
-                sendResponse({ type: 'service', text: 'Пользователь '+session.name+' вышел из сети.', status: 'offline', name: session.name }, connection);
+                connectionNames=connections.map(connection=> connection.name);
+                sendResponse({ type: 'service', text: 'Пользователь '+session.name+' вышел из сети.', status: 'offline', name: session.name, sessions: connectionNames }, connection);
             })
         }
     })
@@ -41,8 +42,10 @@ function openConnection(sessionId) {
     sessions.forEach(session=> {
         if (session.sessionId===sessionId) {
             connections.forEach(connection=> {
-                if (connection.sessionId!==sessionId) {
-                    sendResponse({ type: 'service', text: 'Пользователь '+session.name+' в сети.', name: session.name }, connection);
+                connectionNames=connections.map(connection=> connection.name);
+                sendResponse({ type: 'service', sessions: connectionNames }, connection);
+                if (connection.sessionId!==sessionId) { 
+                    sendResponse({ type: 'service', text: 'Пользователь '+session.name+' в сети.', name: session.name, sessions: connectionNames }, connection);
                 }
             })
         }
@@ -85,7 +88,6 @@ function sessionExist(message, socket) {
             if (session.password===message.password) {
                 sendResponse({ type: 'service', hash: session.sessionId, history: session.messages }, socket);
 
-                openConnection(session.sessionId);
                 socket.sessionId=message.sessionId; //Запоминаем в сокете Id сессии.
                 socket.name=session.name;
 
@@ -123,8 +125,6 @@ function newSession(message, socket) {
     socket.name=message.body.name;
 
     sendResponse({ type: 'service', hash: hash, text: 'Вы зарегистрированы под ником '+message.body.name, name: message.body.name }, socket);
-
-    openConnection(session.sessionId);
 }
 
 function session(message, socket) {
@@ -135,10 +135,8 @@ function session(message, socket) {
                 if (session.sessionId===message.sessionId) {
                     sendResponse({ type: 'service', history: session.messages, name: session.name }, socket);
 
-                    socket.sessionId=message.sessionId; //Запоминаем в сокте Id сессии.
+                    socket.sessionId=message.sessionId; //Запоминаем в сокете Id сессии.
                     socket.name=session.name;
-
-                    openConnection(session.sessionId);
                     
                     return null;
                 }
@@ -154,18 +152,14 @@ function session(message, socket) {
 }
 
 server.on('connection', socket=> {
-    connectionNames=connections.map(connection=> connection.name);
-    if (connectionNames.length) {
-        sendResponse({ type: 'service', sessions: connectionNames }, socket);
-    }
-    
     connections.push(socket);
 
-	socket.on('message', message=> {
+    socket.on('message', message=> {
         var message=JSON.parse(message);
 
-		if (message.type==='hello') {
+        if (message.type==='hello') {
             session(message, socket);
+            openConnection(socket.sessionId);
         }
 
         if (message.type==='message') {
@@ -175,14 +169,14 @@ server.on('connection', socket=> {
                     session.messages.push({
                         photo: '',
                         body: {
-                            name: message.body.name,
+                            name: socket.name,
                             text: message.body.text
                         }
                     });
                 })
                 //***********************************************
                 connections.forEach(connection=> {
-                    sendResponse({ type: 'message', text: message.body.text, name: message.body.name }, connection);
+                    sendResponse({ type: 'message', text: message.body.text, name: socket.name }, connection);
                 })
             } else {
                 sendResponse({ type: 'service', text: 'не верный sessionId' }, socket);

@@ -15,7 +15,8 @@ message={
     photo: 'string',
 	body: {
 		text: 'string',
-		name: 'srring'
+        name: 'srring'
+        nick: 'string'
 	}
 }
 
@@ -64,7 +65,8 @@ function sendResponse(obj, socket) {
                     status: obj.status || 'online',
                     body: {
                         text: obj.text || '',
-                        name: obj.name || ''
+                        name: obj.name || '',
+                        nick: obj.nick || '',
                     }
                 }
 
@@ -84,12 +86,13 @@ function sessionExist(message, socket) {
     var exist=false;
 
     sessions.forEach(session=> {
-        if (session.name===message.body.name) {
+        if (session.nick===message.body.nick) {
             if (session.password===message.password) {
-                sendResponse({ type: 'service', hash: session.sessionId, history: session.messages }, socket);
+                sendResponse({ type: 'service', hash: session.sessionId, text: 'Вы вошли под ником '+session.nick, history: session.messages, name: session.name }, socket);
 
-                socket.sessionId=message.sessionId; //Запоминаем в сокете Id сессии.
+                socket.sessionId=session.sessionId; //Запоминаем в сокете Id сессии.
                 socket.name=session.name;
+                socket.nick=session.nick;
 
                 exist=true;
 
@@ -116,6 +119,7 @@ function newSession(message, socket) {
 
     session.sessionId=hash;
     session.name=message.body.name;
+    session.nick=message.body.nick;
     session.photo=message.photo;
     session.password=message.password;
     session.messages=[];
@@ -123,8 +127,9 @@ function newSession(message, socket) {
 
     socket.sessionId=hash; //Запоминаем в сокете Id сессии.
     socket.name=message.body.name;
+    socket.nick=message.body.nick;
 
-    sendResponse({ type: 'service', hash: hash, text: 'Вы зарегистрированы под ником '+message.body.name, name: message.body.name }, socket);
+    sendResponse({ type: 'service', hash: hash, text: 'Вы зарегистрированы под ником '+message.body.nick, name: message.body.name, nick: message.body.nick }, socket);
 }
 
 function session(message, socket) {
@@ -137,7 +142,8 @@ function session(message, socket) {
 
                     socket.sessionId=message.sessionId; //Запоминаем в сокете Id сессии.
                     socket.name=session.name;
-                    
+                    socket.nick=session.nick;
+
                     return null;
                 }
             })

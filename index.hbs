@@ -7,12 +7,14 @@
 	<link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500" rel="stylesheet">
 </head>
 <body>
-	<div id="modal">
-		<h3>Авторизация</h3>
-		<input id="login_name" type="text" class="form-control" placeholder="ФИО">
-		<input id="login_nick" type="text" class="form-control" placeholder="Ник">
-		<input id="login_pass" type="password" class="form-control" placeholder="password">
-		<button id="login" class="btn btn-default">Войти</button>
+	<div class="wrap_modal">
+		<div id="modal">
+			<h3>Авторизация</h3>
+			<input id="login_name" type="text" class="form-control" placeholder="ФИО">
+			<input id="login_nick" type="text" class="form-control" placeholder="Ник">
+			<input id="login_pass" type="password" class="form-control" placeholder="password">
+			<button id="login" class="btn btn-success">Войти</button>
+		</div>
 	</div>
 	<div id="main_container" class="container-fluid">
 		<div class="row">
@@ -25,7 +27,7 @@
 					<div class="wrap">
 						<button id="logout" class="btn btn-danger">Выход</button>
 					</div>
-					<div>Участники (<span id='length'></span>)</div>
+					<div>Участники (<span id='length'>0</span>)</div>
 					<ul id='sessionsContainer'></ul>
 				</div>
 			</div>

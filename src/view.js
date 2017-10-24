@@ -67,13 +67,19 @@ module.exports = {
             wrap.classList.add('right');
         }   
     },
-    interfceOnOFF(flag) {
+    modalOnOff(flag) {
         var main_container=document.querySelector('#main_container');
+        var modal=document.querySelector('#modal');
+        var wrap_modal=document.querySelector('.wrap_modal');
 
         if (flag==='on') {
-            main_container.classList.remove('bw');
-        } else {
             main_container.classList.add('bw');
+            modal.classList.add('active');
+            wrap_modal.classList.add('active');
+        } else {
+            main_container.classList.remove('bw');
+            modal.classList.remove('active');
+            wrap_modal.classList.remove('active');
         }
     }
     

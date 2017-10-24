@@ -26,7 +26,8 @@ socket.addEventListener('message', event=> {
 
     if (message.type==='service') {
         if (message.hash) {
-            model.localSave({ sessionId: message.hash });
+            model.localSave({ sessionId: message.hash, name: message.body.name });
+            view.userInfo();
         } 
         if (message.body.text) {
             addMessage(message, 'service');
@@ -56,8 +57,7 @@ socket.addEventListener('open', ()=> {
         model.sendMessage({ type: 'hello', sessionId: localStorage.sessionId }, socket);
         view.userInfo();
     } else {
-        modal.style.display='block';
-        
+        view.modalOnOff('on');
     } 
 });
 
@@ -79,9 +79,8 @@ login.addEventListener('click', ()=> {
     var nick=document.querySelector('#login_nick').value;
     var pass=document.querySelector('#login_pass').value;
 
-    model.sendMessage({ type: 'hello', password: pass, name: name }, socket);
-    model.localSave({ name: name });
-    view.userInfo();
-    modal.style.display='none';
-    
+    if (model.checkForm(modal)==undefined) {
+        model.sendMessage({ type: 'hello', password: pass, name: name, nick: nick }, socket);
+        view.modalOnOff('off');
+    }
 })

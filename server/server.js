@@ -160,8 +160,16 @@ function session(message, socket) {
 server.on('connection', socket=> {
     connections.push(socket);
 
-    socket.on('message', message=> {
-        var message=JSON.parse(message);
+    socket.on('message', m=> {
+        var message;
+
+        try {                                       //Ели не получается распарсить JSON, значит пришёл бинарный файл
+            message=JSON.parse(m);
+        } catch (err) {
+            fs.writeFile('./avatars/'+socket.nick+'.jpg', m); //сохраняем аватар в файле с именем сессии
+            
+            return null;
+        }
 
         if (message.type==='hello') {
             session(message, socket);

@@ -9,6 +9,7 @@ var send=document.querySelector('#sendButton');
 var logout=document.querySelector('#logout');
 var login=document.querySelector('#login');
 var modal=document.querySelector('#modal');
+var upload=document.querySelector('#upload');
 var sessions=[];
 
 function addMessage(messages, type) {
@@ -82,5 +83,31 @@ login.addEventListener('click', ()=> {
     if (model.checkForm(modal)==undefined) {
         model.sendMessage({ type: 'hello', password: pass, name: name, nick: nick }, socket);
         view.modalOnOff('off');
+    }
+})
+
+upload.addEventListener('dragover', e=> {
+    if (e.dataTransfer.items[0].kind=='file') {
+        e.preventDefault();
+    }
+})
+
+upload.addEventListener('drop', e=> {
+    var file=e.dataTransfer.items[0];
+
+    if (file.type !== 'image/jpeg') {
+        alert ('Выберите jpeg файл');
+    }
+
+    if (file && file.kind == 'file') {
+        var reader=new FileReader();
+
+        e.preventDefault();
+
+        reader.addEventListener('loadend', e=> {
+
+            socket.send(e.target.result);
+        })
+        reader.readAsArrayBuffer(file.getAsFile());
     }
 })

@@ -35,7 +35,7 @@ module.exports = {
                 } else {
                     inputs[i].style.border='1px solid #5cb85c';
                 }
-            } else {
+            } else if (inputs[i].children.length) {
                 this.checkForm(inputs[i]);
             }
         }

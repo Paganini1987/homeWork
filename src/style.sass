@@ -2,15 +2,35 @@ $accent: #ff8663
 $textColorDef: #ffffff
 body
     font-family: 'fira sans'
-#upload
+#upload_modal
     display: block
     position: absolute
-    bottom: 0
-    left: 0
-    width: 200px
-    height: 200px
+    top: -500px
+    left: 50%
+    margin-left: -160px
+    padding: 10px
     z-index: 1000
-    background-color: #eeeeee;
+    border-radius: 5px
+    box-shadow: 0 0 20px 0px rgba(0,0,0,0.3);
+    transition: 1s ease
+    background-color: #fff
+    &.active
+        top: 0
+    .dnd_container
+        display: block
+        line-height: 200px
+        width: 300px
+        text-align: center
+        border: 2px dashed black
+        border-radius: 5px
+        background-size: cover!important
+    .buttons
+        display: block
+        margin-top: 10px
+        text-align: right
+        #cancel_button
+            margin-right: 10px
+
 .wrap_modal
     display: none
     position: absolute
@@ -83,6 +103,7 @@ body
             background-color: #fff
             margin-right: 10px
             vertical-align: middle
+            cursor: pointer
         .user_name
             display: inline-block
             font-size: 16px
@@ -124,26 +145,34 @@ body
         li
             display: block
             padding: 7px 0
+            
             &>div
                 display: inline-block
+                position: relative
                 padding: 10px
-                
+                max-width: 40%
                 img
-                    display: inline-block
+                    display: block
+                    position: absolute
                     width: 50px
                     height: 50px
                     border-radius: 50%
-                    margin-right: 20px
-                    vertical-align: top
+                    top: 10px
+                    left: 10px
                     background-color: #fff
-                div
-                    display: inline-block
-                    vertical-align: top
+                &>div
+                    display: block
+                    margin-left: 70px
+                    
                     .user_name
                         display: block
                         margin-bottom: 10px
                         font-weight: 500
                         text-align: left
+                        span
+                            display: inline-block
+                            margin-left: 10px
+                            font-weight: 300
                     .user_message
                         display: block
                         font-weight: 300

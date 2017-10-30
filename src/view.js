@@ -1,10 +1,18 @@
 module.exports = {
     userInfo() {
         var user_info_name=document.querySelector('#user_info_name');
+        var avatar=document.querySelector('#user_info_avatar');
 
         if (localStorage.name) {
             user_info_name.innerText=localStorage.name;
         }
+        if (localStorage.nick) {
+            avatar.classList.add(localStorage.nick);
+        }
+        if (localStorage.photo) {
+            avatar.setAttribute('src', localStorage.photo);
+        }
+
     },
     sessionsController(message, sessions) { // Добавлет или удаляет пользователей из списка
         var sessionsContainer=document.querySelector('#sessionsContainer');
@@ -36,6 +44,7 @@ module.exports = {
         var name=document.createElement('DIV');
         var text=document.createElement('DIV');
         var img=document.createElement('IMG');
+        var time=document.createElement('span');
 
         this.leftOrRight(message, li, type);
     
@@ -44,10 +53,14 @@ module.exports = {
         } else {
             div.classList.add('bg-primary');
         }
+
         if (type!=='service') {
-            img.setAttribute('src', message.photo || '/img/noavatar.png');
+            img.setAttribute('src', message.body.photo || '/img/noavatar.png');
+            img.classList.add(message.body.nick);
+            time.innerText=message.body.time;
             name.classList.add('user_name');
             name.innerText=message.body.name;
+            name.appendChild(time);
             text.classList.add('user_message');
             text.innerText=message.body.text;
             div2.appendChild(name);
@@ -80,6 +93,34 @@ module.exports = {
             main_container.classList.remove('bw');
             modal.classList.remove('active');
             wrap_modal.classList.remove('active');
+        }
+    },
+    uploadModalOnOff(flag) {
+        var modal=document.querySelector('#upload_modal');
+        var cancel_button=document.querySelector('#cancel_button');
+        var upload=document.querySelector('#upload');
+
+        if (flag==='on') {
+            modal.classList.add('active');
+            upload.style.background='';
+            upload.style.color='rgba(0,0,0,1)';
+            cancel_button.addEventListener('click', ()=> {
+                modal.classList.remove('active');
+            })
+            
+        } else {
+            modal.classList.remove('active');
+        }
+    },
+    changePhoto(elem, elClass, src) {
+        var elem=elem.children;
+        
+        for (var i=0; i<elem.length; i++) {
+            if (elem[i].tagName==='IMG' && elem[i].classList.contains(elClass)) {
+                elem[i].setAttribute('src', src);
+            } else if (elem[i].children.length) {
+                this.changePhoto(elem[i], elClass, src);
+            }
         }
     }
     

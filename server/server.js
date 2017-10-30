@@ -13,11 +13,12 @@ message={
     hash: '',
 	sessionId: 'string',
     password: 'string',
-    photo: 'string',
 	body: {
 		text: 'string',
-        name: 'srring'
-        nick: 'string'
+        name: 'srring',
+        nick: 'string',
+        time: 'string',
+        photo: 'string'
 	}
 }
 
@@ -67,7 +68,6 @@ function sendResponse(obj, socket) {
                     hash: obj.hash || '',
                     sessionId: obj.sessionId || '',
                     password: obj.password || '',
-                    photo: obj.photo || '',
                     history: obj.history || '',
                     sessions: obj.sessions || '',
                     status: obj.status || 'online',
@@ -75,6 +75,8 @@ function sendResponse(obj, socket) {
                         text: obj.text || '',
                         name: obj.name || '',
                         nick: obj.nick || '',
+                        time: obj.time || '',
+                        photo: obj.photo || ''
                     }
                 }
 
@@ -96,7 +98,9 @@ function sessionExist(message, socket) {
     sessions.forEach(session=> {
         if (session.nick===message.body.nick) {
             if (session.password===message.password) {
-                sendResponse({ type: 'service', hash: session.sessionId, text: 'Вы вошли под ником '+session.nick, photo: session.photo, history: session.messages, name: session.name }, socket);
+                var history=addPhotoToHistory(session);
+
+                sendResponse({ type: 'service', hash: session.sessionId, text: 'Вы вошли под ником '+session.nick, photo: session.photo, history: history, name: session.name }, socket);
 
                 socket.sessionId=session.sessionId; //Запоминаем в сокете Id сессии.
                 socket.name=session.name;
@@ -147,7 +151,9 @@ function session(message, socket) {
         if (sessions.some(session=> session.sessionId===message.sessionId)) {
             sessions.forEach(session=> {
                 if (session.sessionId===message.sessionId) {
-                    sendResponse({ type: 'service', photo: session.photo, history: session.messages, name: session.name }, socket);
+                    var history=addPhotoToHistory(session);
+
+                    sendResponse({ type: 'service', photo: session.photo, history: history, name: session.name, nick: session.nick }, socket);
 
                     socket.sessionId=message.sessionId; //Запоминаем в сокете Id сессии.
                     socket.name=session.name;
@@ -200,19 +206,25 @@ server.on('connection', socket=> {
 
         if (message.type==='message') {
             if (sessions.some(session=> session.sessionId===message.sessionId)) {
+                var date=new Date();
+                var hours=date.getHours();
+                var minutes=date.getMinutes();
+                var time=`${hours}:${minutes}`;
+
                 //Запись сообщения во все существующие сессии
                 sessions.forEach(session=> {
                     session.messages.push({
                         body: {
                             name: socket.name,
                             nick: socket.nick,
-                            text: message.body.text
+                            text: message.body.text,
+                            time: time
                         }
                     });
                 })
                 //***********************************************
                 connections.forEach(connection=> {
-                    sendResponse({ type: 'message', photo: socket.photo, text: message.body.text, nick: socket.nick, name: socket.name }, connection);
+                    sendResponse({ type: 'message', photo: socket.photo, text: message.body.text, time: time, nick: socket.nick, name: socket.name }, connection);
                 })
             } else {
                 sendResponse({ type: 'service', text: 'не верный sessionId' }, socket);
@@ -233,6 +245,19 @@ server.on('connection', socket=> {
     });
 })
 
+function addPhotoToHistory(session) {
+    var history=session.messages.map(message=> {
+        sessions.forEach(session=> {
+            if (message.body.nick===session.nick) {
+                message.body.photo=session.photo;
+            }
+        })
+
+        return message;
+    })
+
+    return history;
+}
 //HTTP сервер для отдачи картинок
 
 var httpServer=http.createServer((request, response)=> {

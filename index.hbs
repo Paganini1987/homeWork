@@ -2,12 +2,22 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<meta http-equiv="Cache-Control" content="private">
+	<title>Чат</title>
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500" rel="stylesheet">
 </head>
 <body>
-	<div id="upload"></div>
+	<div id="upload_modal">
+		<h3>Загрузка фото</h3>
+		<div class="wrap">
+			<div id="upload" class="dnd_container">Перетащите сюда фото</div>
+		</div>
+		<div class="buttons">
+			<button id="cancel_button" class="btn btn-danger">Отмена</button>
+			<button id="upload_button" class="btn btn-success">Загрузить</button>
+		</div>
+	</div>
 	<div class="wrap_modal">
 		<div id="modal">
 			<h3>Авторизация</h3>
@@ -22,7 +32,7 @@
 			<div class="col-md-4 col-sm-4">
 				<div class="sessions">
 					<div class="user">
-						<img src="/img/noavatar.png" alt="">
+						<img id="user_info_avatar" src="/img/noavatar.png" alt="">
 						<div id="user_info_name" class="user_name">Добро пожаловать!</div>
 					</div>
 					<div class="wrap">

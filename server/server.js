@@ -9,7 +9,7 @@ var connectionNames=[];
 
 /*
 message={
-	type: [hello, typing, message, service, changePhoto],
+	type: [hello, typing, message, service, changePhoto, close],
     hash: '',
 	sessionId: 'string',
     password: 'string',
@@ -165,6 +165,9 @@ function session(message, socket) {
             })
         } else {
             sendResponse({ type: 'service', text: 'Сессия с таким идентификатором не найдена на сервере' }, socket);
+            connections = connections.filter(current => {
+                return current !== socket;
+            });
         }
     } else {
         if (!sessionExist(message, socket)) {
@@ -174,7 +177,6 @@ function session(message, socket) {
 }
 
 server.on('connection', socket=> {
-    connections.push(socket);
 
     socket.on('message', m=> {
         var message;
@@ -200,8 +202,18 @@ server.on('connection', socket=> {
         }
 
         if (message.type==='hello') {
+            connections.push(socket);
+
             session(message, socket);
             openConnection(socket.sessionId);
+        }
+
+        if (message.type==='close') {
+            
+            connections = connections.filter(current => {
+                return current !== socket;
+            });
+
         }
 
         if (message.type==='message') {

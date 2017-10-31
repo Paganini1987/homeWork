@@ -83,6 +83,7 @@ send.addEventListener('click', ()=> {
 
 logout.addEventListener('click', ()=> {
     model.localSave({ name: '', sessionId: '', photo: '' });
+    model.sendMessage({ type: 'close' }, socket);
     document.location.reload(true);
 })
 
@@ -140,7 +141,6 @@ user_info_avatar.addEventListener('click', ()=> {
 })
 
 input.addEventListener('keyup', e=> {
-    console.log(e);
     if (e.key==='Enter') {
         if (!input.value) {
             return null;
